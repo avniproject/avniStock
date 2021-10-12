@@ -5,19 +5,23 @@ import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import _ from 'lodash';
 import PasswordInput from '../components/PasswordInput';
+import Spinner from '../components/Spinner';
+import AuthService from '../service/AuthService';
+import ErrorText from '../components/ErrorText';
+import {getService} from '../hooks/getService';
 
 export default function ForgotPasswordScreen({navigation}) {
   const [username, setUsername] = useState();
-  const [displayPassword, setDisplayPassword] = useState(false);
   const [otp, setOtp] = useState();
-  const [password, setPassword] = useState({
-    password: undefined,
-    error: undefined,
-  });
+  const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState({
     password: undefined,
     error: undefined,
   });
+  const [cognitoUser, setCognitoUser] = useState();
+  const [displayOtherOptions, setDisplayOtherOptions] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [error, setError] = useState();
 
   const OtpAndPassword = () => {
     return (
@@ -31,15 +35,9 @@ export default function ForgotPasswordScreen({navigation}) {
         />
         <PasswordInput
           label={'New Password'}
-          value={password.password}
+          value={password}
           returnKeyType={'next'}
-          onChange={text =>
-            setPassword(prevState => ({
-              ...prevState,
-              password: text,
-              error: undefined,
-            }))
-          }
+          onChange={text => setPassword(text)}
         />
         <PasswordInput
           label={'Confirm new Password'}
@@ -57,31 +55,70 @@ export default function ForgotPasswordScreen({navigation}) {
         <Button
           mode="contained"
           onPress={onResetPassword}
-          style={{marginTop: 16}}>
-          Reset password
+          style={{marginTop: 16}}
+        >
+          Change password
         </Button>
       </Fragment>
     );
   };
 
   const onResetPassword = () => {
-    if (!_.isEqual(password.password, confirmPassword.password)) {
+    if (!_.isEqual(password, confirmPassword.password)) {
       setConfirmPassword(prevState => ({
         ...prevState,
         error: 'Password does not match with the entered password',
       }));
-      return;
+    } else {
+      setShowSpinner(true);
+      getService(AuthService)
+        .verifyOtpAndSetPassword(cognitoUser, otp, password)
+        .then(
+          () => {
+            setShowSpinner(false);
+            // eslint-disable-next-line no-alert
+            alert('Password changed successfully.');
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'LoginScreen'}],
+            });
+          },
+          error => {
+            setShowSpinner(false);
+            setError(error.message);
+          },
+        );
     }
-    navigation.navigate('LoginScreen');
   };
 
   const sendOTP = () => {
-    setDisplayPassword(true);
+    setShowSpinner(true);
+    getService(AuthService)
+      .forgotPassword(username)
+      .then(
+        response => {
+          if (response.status === 'SUCCESS') {
+            navigation.navigate('LoginScreen');
+          }
+          if (response.status === 'INPUT_VERIFICATION_CODE') {
+            setShowSpinner(false);
+            setCognitoUser(response.user);
+            // eslint-disable-next-line no-alert
+            alert('OTP sent to registered mobile number');
+            setDisplayOtherOptions(true);
+          }
+        },
+        error => {
+          setShowSpinner(false);
+          setError(error.message);
+        },
+      );
   };
 
   return (
     <Background>
       <Header>Restore Password</Header>
+      <ErrorText errorText={error} />
       <TextInput
         label="Username"
         returnKeyType="next"
@@ -91,12 +128,13 @@ export default function ForgotPasswordScreen({navigation}) {
         textContentType="emailAddress"
         keyboardType="email-address"
       />
-      {!displayPassword && (
+      {!displayOtherOptions && (
         <Button mode="contained" onPress={sendOTP} style={{marginTop: 16}}>
           Send OTP
         </Button>
       )}
-      {displayPassword && OtpAndPassword()}
+      {displayOtherOptions && OtpAndPassword()}
+      <Spinner show={showSpinner} />
     </Background>
   );
 }

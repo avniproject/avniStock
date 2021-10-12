@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import Background from '../components/Background';
@@ -7,39 +7,55 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import Colors from '../styles/Colors';
 import PasswordInput from '../components/PasswordInput';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginActions} from '../reducers/LoginReducer';
+import ErrorText from '../components/ErrorText';
 
 export default function LoginScreen({navigation}) {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const dispatch = useDispatch();
+  const state = useSelector(storeState => storeState.login);
 
   const onLoginPressed = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'HomeScreen'}],
-    });
+    const nextSteps = {
+      success: () =>
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'HomeScreen'}],
+        }),
+      resetPassword: cognitoUser =>
+        navigation.navigate('ResetPasswordScreen', {cognitoUser}),
+      failure: error => dispatch({type: loginActions.ON_ERROR, error}),
+    };
+    dispatch({type: loginActions.ON_LOGIN_START, nextSteps});
   };
 
   return (
     <Background>
       <Header>Avni Stock</Header>
+      <ErrorText errorText={state.loginError} />
       <TextInput
         label="Username"
         returnKeyType="next"
-        value={username}
-        onChangeText={text => setUsername(text)}
+        value={state.userId}
+        onChangeText={userId =>
+          dispatch({type: loginActions.ON_USER_ID_CHANGE, userId})
+        }
         autoCapitalize="none"
         textContentType="emailAddress"
         keyboardType="email-address"
       />
       <PasswordInput
         label={'Password'}
-        value={password}
-        onChange={setPassword}
+        value={state.password}
+        onChange={password =>
+          dispatch({type: loginActions.ON_PASSWORD_CHANGE, password})
+        }
         returnKeyType={'done'}
       />
       <View style={styles.forgotPassword}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}
+        >
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>

@@ -1,0 +1,8 @@
+{
+  "logLevel": 1,
+  "locale": "en",
+  "pageSize": 100,
+  "dev": {
+    "pageSize": 100
+  }
+}

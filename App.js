@@ -1,12 +1,16 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './src/screens/HomeScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import ResetPasswordScreen from './src/screens/ResetPasswordScreen';
-import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import {createStore} from 'redux';
+import rootReducer from './src/reducers';
+import Navigator from './src/framework/Navigator';
+import {Provider} from 'react-redux';
+import Realm from 'realm';
+import Schema from './src/models/Schema';
+import BeanRegistry from './src/framework/bean/BeanRegistry';
+import AuthService from './src/service/AuthService';
+import Spinner from './src/components/Spinner';
 
+let beans, db;
 const theme = {
   ...DefaultTheme,
   dark: false,
@@ -14,33 +18,34 @@ const theme = {
     ...DefaultTheme.colors,
   },
 };
-const Stack = createStackNavigator();
-const isLoggedIn = false;
+const store = createStore(rootReducer);
 
-const App = () => {
-  return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={isLoggedIn ? 'HomeScreen' : 'LoginScreen'}
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen
-            name="ForgotPasswordScreen"
-            component={ForgotPasswordScreen}
-          />
-          <Stack.Screen
-            name="ResetPasswordScreen"
-            component={ResetPasswordScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
-  );
-};
+class App extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {userExists: false, loadApp: false};
+    if (db === undefined) {
+      db = new Realm(Schema);
+      beans = BeanRegistry.init(db, this);
+    }
+    beans
+      .get(AuthService)
+      .userExists()
+      .then(exists => this.setState({userExists: exists, loadApp: true}));
+  }
+
+  render() {
+    return this.state.loadApp ? (
+      <Provider store={store}>
+        <PaperProvider theme={theme}>
+          <Navigator userExists={this.state.userExists} />
+        </PaperProvider>
+      </Provider>
+    ) : (
+      <Spinner show={!this.state.loadApp} />
+    );
+  }
+}
 
 export default App;
 //export default from './storybook';
