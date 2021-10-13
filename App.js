@@ -9,6 +9,7 @@ import Schema from './src/models/Schema';
 import BeanRegistry from './src/framework/bean/BeanRegistry';
 import AuthService from './src/service/AuthService';
 import Spinner from './src/components/Spinner';
+import {NavigationContainer} from '@react-navigation/native';
 
 let beans, db;
 const theme = {
@@ -38,7 +39,9 @@ class App extends React.Component {
     return this.state.loadApp ? (
       <Provider store={store}>
         <PaperProvider theme={theme}>
-          <Navigator userExists={this.state.userExists} />
+          <NavigationContainer>
+            <Navigator userExists={this.state.userExists} />
+          </NavigationContainer>
         </PaperProvider>
       </Provider>
     ) : (
