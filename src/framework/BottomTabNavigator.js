@@ -25,6 +25,7 @@ const BottomTabNavigator = () => {
               );
           }
         },
+        headerShown: false,
       })}
     >
       <Tab.Screen name="Items" component={ItemScreen} />

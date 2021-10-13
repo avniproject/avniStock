@@ -8,7 +8,7 @@ import BaseService from './BaseService';
 import SettingsService from './SettingsService';
 import _ from 'lodash';
 import {getJSON} from '../framework/http/requests';
-import AuthenticationError, {NO_USER} from './AuthenticationError';
+import AuthenticationError, {NO_USER} from './error/AuthenticationError';
 import General from '../utility/General';
 import UserInfoService from './UserInfoService';
 

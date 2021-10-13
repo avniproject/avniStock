@@ -20,7 +20,11 @@ class SettingsService extends BaseService {
       let settings = this.getSettings();
       if (_.isNil(settings) || Config.ENV === 'dev') {
         settings = Settings.create();
-        dbInScope.create(Settings.schema.name, settings, Realm.UpdateMode.All);
+        dbInScope.create(
+          Settings.schema.name,
+          settings,
+          Realm.UpdateMode.Modified,
+        );
       }
 
       if (Config.ENV === 'dev') {

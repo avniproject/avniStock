@@ -87,7 +87,7 @@ class BaseService {
     }
 
     const db = this.db;
-    this.db.write(() => db.create(schema, entity, Realm.UpdateMode.All));
+    this.db.write(() => db.create(schema, entity, Realm.UpdateMode.Modified));
     return entity;
   }
 
@@ -99,7 +99,7 @@ class BaseService {
 
   createEntities(schema, entities) {
     return entities.map(entity => () => {
-      this.db.create(schema, entity, Realm.UpdateMode.Never);
+      this.db.create(schema, entity, Realm.UpdateMode.Modified);
     });
   }
 

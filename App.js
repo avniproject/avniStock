@@ -10,6 +10,8 @@ import BeanRegistry from './src/framework/bean/BeanRegistry';
 import AuthService from './src/service/AuthService';
 import Spinner from './src/components/Spinner';
 import {NavigationContainer} from '@react-navigation/native';
+import EntitySyncStatusService from './src/service/EntitySyncStatusService';
+import EntityMetaData from './src/models/EntityMetaData';
 
 let beans, db;
 const theme = {
@@ -29,6 +31,7 @@ class App extends React.Component {
       db = new Realm(Schema);
       beans = BeanRegistry.init(db, this);
     }
+    beans.get(EntitySyncStatusService).setup(EntityMetaData.model());
     beans
       .get(AuthService)
       .userExists()
