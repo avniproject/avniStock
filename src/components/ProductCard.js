@@ -9,13 +9,13 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../styles/Colors';
 
-export default function ProductCard({
-  name,
-  unit,
-  quantity,
-  onCardPress = () => console.log(`${name} Card pressed`),
-  onEditPress = () => console.log(`${name} Edit pressed`),
-}) {
+export default function ProductCard({name, unit, quantity, uuid, navigation}) {
+  const onCardPress = () =>
+    navigation.navigate('Product Details', {productUUID: uuid});
+
+  const onEditPress = () =>
+    navigation.navigate('Edit Product', {productUUID: uuid});
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>

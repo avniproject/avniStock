@@ -22,17 +22,13 @@ const ProductListScreen = ({navigation}) => {
   }, [dispatch]);
 
   const renderProduct = ({item}) => (
-    <TouchableNativeFeedback
-      onPress={() => console.log(`${item.name} Product clicked`)}
-    >
-      <View>
-        <ProductCard
-          name={item.name}
-          unit={item.unit}
-          quantity={item.initialStock}
-        />
-      </View>
-    </TouchableNativeFeedback>
+    <ProductCard
+      name={item.name}
+      unit={item.unit}
+      quantity={item.initialStock}
+      uuid={item.uuid}
+      navigation={navigation}
+    />
   );
 
   const renderHeader = () => (

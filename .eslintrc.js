@@ -4,5 +4,6 @@ module.exports = {
   rules: {
     'no-shadow': 'off',
     radix: 'off',
+    'react-native/no-inline-styles': 'off',
   },
 };

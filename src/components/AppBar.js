@@ -2,16 +2,22 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Colors from '../styles/Colors';
 import Sync from './Sync';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function AppBar({title, navigation}) {
+export default function AppBar({title = '', navigation, showBackButton}) {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.leftContainer}>
+        {showBackButton && (
+          <MaterialCommunityIcons
+            name={'arrow-left'}
+            style={styles.icon}
+            onPress={() => navigation.goBack()}
+          />
+        )}
         <Text style={styles.header}>{title}</Text>
       </View>
-      <View>
-        <Sync navigation={navigation} />
-      </View>
+      <View>{!showBackButton && <Sync navigation={navigation} />}</View>
     </View>
   );
 }
@@ -31,5 +37,13 @@ const styles = StyleSheet.create({
     color: Colors.text,
     paddingVertical: 12,
     opacity: 0.8,
+  },
+  leftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    fontSize: 30,
+    marginRight: 10,
   },
 });
