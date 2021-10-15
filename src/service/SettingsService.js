@@ -2,7 +2,7 @@ import BaseService from './BaseService';
 import Service from '../framework/bean/Service';
 import InitialSettings from '../../config/initialSettings.json';
 import General from '../utility/General';
-import Settings from '../models/Settings';
+import Settings from '../models/reference/Settings';
 import Config from '../framework/Config';
 import _ from 'lodash';
 import Realm from 'realm';
@@ -27,7 +27,7 @@ class SettingsService extends BaseService {
         );
       }
 
-      if (Config.ENV === 'dev') {
+      if (this.isDev()) {
         settings.logLevel = General.LogLevel.Debug;
         settings.pageSize = InitialSettings.dev.pageSize;
       }
@@ -54,6 +54,10 @@ class SettingsService extends BaseService {
     let level = this.getSettings().logLevel;
     General.setCurrentLogLevel(level);
     return output;
+  }
+
+  isDev() {
+    return Config.ENV === 'dev';
   }
 }
 

@@ -1,7 +1,7 @@
 import Service from '../framework/bean/Service';
 import BaseService from './BaseService';
-import EntityMetaData from '../models/EntityMetaData';
-import EntityQueue from '../models/EntityQueue';
+import EntityMetaData from '../models/framework/EntityMetaData';
+import EntityQueue from '../models/framework/EntityQueue';
 import _ from 'lodash';
 
 @Service('entityQueueService')

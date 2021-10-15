@@ -6,15 +6,15 @@ class UserInfo extends Realm.Object {
   static DEFAULT_SETTINGS = '{"trackLocation": false, "locale": "en"}';
 
   static fromResource(resource) {
-    let userInfo = new UserInfo();
-    userInfo.username = resource.username;
-    userInfo.uuid = UserInfo.UUID;
-    userInfo.organisationName = resource.organisationName;
-    userInfo.settings = _.isNil(resource.settings)
-      ? UserInfo.DEFAULT_SETTINGS
-      : JSON.stringify(resource.settings);
-    userInfo.name = resource.name;
-    return userInfo;
+    return {
+      username: resource.username,
+      uuid: UserInfo.UUID,
+      organisationName: resource.organisationName,
+      settings: _.isNil(resource.settings)
+        ? UserInfo.DEFAULT_SETTINGS
+        : JSON.stringify(resource.settings),
+      name: resource.name,
+    };
   }
 
   setSettings(settingsObject) {

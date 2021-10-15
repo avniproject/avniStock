@@ -1,6 +1,6 @@
 import BaseService from './BaseService';
 import Service from '../framework/bean/Service';
-import UserInfo from '../models/UserInfo';
+import UserInfo from '../models/reference/UserInfo';
 
 @Service('userInfoService')
 class UserInfoService extends BaseService {

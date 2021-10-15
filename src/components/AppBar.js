@@ -3,14 +3,14 @@ import React from 'react';
 import Colors from '../styles/Colors';
 import Sync from './Sync';
 
-export default function AppBar({title}) {
+export default function AppBar({title, navigation}) {
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.header}>{title}</Text>
       </View>
       <View>
-        <Sync />
+        <Sync navigation={navigation} />
       </View>
     </View>
   );

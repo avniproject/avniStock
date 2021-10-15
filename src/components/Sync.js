@@ -5,7 +5,7 @@ import {Alert, StyleSheet, TouchableNativeFeedback, View} from 'react-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import _ from 'lodash';
 import SyncService from '../service/SyncService';
-import EntityMetaData from '../models/EntityMetaData';
+import EntityMetaData from '../models/framework/EntityMetaData';
 import SyncError from '../service/error/SyncError';
 import EntitySyncStatusService from '../service/EntitySyncStatusService';
 import React from 'react';
@@ -17,7 +17,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Badge from './Badge';
 import Colors from '../styles/Colors';
 
-export default function Sync() {
+export default function Sync({navigation}) {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.sync);
   const netInfo = useNetInfo();
@@ -37,6 +37,10 @@ export default function Sync() {
   function _postSync() {
     dispatch({type: syncActions.POST_SYNC});
     dispatch({type: 'RESET'});
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Product List'}],
+    });
   }
 
   function _onError(error, ignoreBugsnag) {

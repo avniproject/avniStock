@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Observation from '../models/observation/Observation';
 
 var currentLogLevel;
 
@@ -96,6 +97,67 @@ class General {
         return v.toString(16);
       },
     );
+  }
+  static assignDateFields(dateFields, source, dest) {
+    if (!_.isNil(dateFields)) {
+      dateFields.forEach(fieldName => {
+        dest[fieldName] = _.isNil(source[fieldName])
+          ? null
+          : new Date(source[fieldName]);
+      });
+    }
+  }
+
+  static assignFields(
+    source,
+    dest,
+    directCopyFields,
+    dateFields,
+    observationFields = [],
+    entityService,
+  ) {
+    if (!_.isNil(directCopyFields)) {
+      directCopyFields.forEach(fieldName => {
+        dest[fieldName] = source[fieldName];
+      });
+    }
+    General.assignDateFields(dateFields, source, dest);
+    General.assignObsFields(source, dest, observationFields, entityService);
+
+    return dest;
+  }
+
+  static assignObsFields(source, dest, observationFields = [], entityService) {
+    observationFields.forEach(observationField => {
+      const observations = [];
+      if (!_.isNil(source[observationField])) {
+        _.toPairs(source[observationField]).forEach(([conceptUUID, value]) => {
+          let observation = Observation.create();
+          observation.concept = entityService.findByKey(
+            'uuid',
+            conceptUUID,
+            'Concept', //Fix the cyclic dependency
+          );
+          observation.valueJSON = JSON.stringify(
+            observation.concept.getValueWrapperFor(value),
+          );
+          observations.push(observation);
+        });
+      }
+      dest[observationField] = observations;
+    });
+
+    return dest;
+  }
+
+  static pick(from, attributes, listAttributes) {
+    const picked = _.pick(from, attributes);
+    if (!_.isNil(listAttributes)) {
+      listAttributes.forEach(listAttribute => {
+        picked[listAttribute] = [...from[listAttribute]];
+      });
+    }
+    return picked;
   }
 }
 

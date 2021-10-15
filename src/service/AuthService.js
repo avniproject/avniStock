@@ -239,7 +239,10 @@ class AuthService extends BaseService {
 
   _getSettings() {
     const settings = this.settingsService.getSettings();
-    if (this._authParametersAbsent(settings)) {
+    if (
+      !this._authIsStubbed(settings.toJSON()) &&
+      this._authParametersAbsent(settings.toJSON())
+    ) {
       return this._updateCognitoPoolSettingsFromServer().then(
         updatedSettings => updatedSettings,
       );

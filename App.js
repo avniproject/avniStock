@@ -11,7 +11,7 @@ import AuthService from './src/service/AuthService';
 import Spinner from './src/components/Spinner';
 import {NavigationContainer} from '@react-navigation/native';
 import EntitySyncStatusService from './src/service/EntitySyncStatusService';
-import EntityMetaData from './src/models/EntityMetaData';
+import EntityMetaData from './src/models/framework/EntityMetaData';
 
 let beans, db;
 const theme = {

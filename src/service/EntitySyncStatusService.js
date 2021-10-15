@@ -4,8 +4,8 @@ import General from '../utility/General';
 import _ from 'lodash';
 import EntityQueueService from './EntityQueueService';
 import moment from 'moment';
-import EntitySyncStatus from '../models/EntitySyncStatus';
-import EntityMetaData from '../models/EntityMetaData';
+import EntitySyncStatus from '../models/framework/EntitySyncStatus';
+import EntityMetaData from '../models/framework/EntityMetaData';
 
 @Service('entitySyncStatusService')
 class EntitySyncStatusService extends BaseService {

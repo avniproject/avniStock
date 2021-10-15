@@ -10,10 +10,13 @@ import PasswordInput from '../components/PasswordInput';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginActions} from '../reducers/LoginReducer';
 import ErrorText from '../components/ErrorText';
+import {getService} from '../hooks/getService';
+import SettingsService from '../service/SettingsService';
 
 export default function LoginScreen({navigation}) {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.login);
+  const isDev = getService(SettingsService).isDev();
 
   const onLoginPressed = () => {
     const nextSteps = {
@@ -44,21 +47,25 @@ export default function LoginScreen({navigation}) {
         textContentType="emailAddress"
         keyboardType="email-address"
       />
-      <PasswordInput
-        label={'Password'}
-        value={state.password}
-        onChange={password =>
-          dispatch({type: loginActions.ON_PASSWORD_CHANGE, password})
-        }
-        returnKeyType={'done'}
-      />
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-        >
-          <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
+      {!isDev && (
+        <PasswordInput
+          label={'Password'}
+          value={state.password}
+          onChange={password =>
+            dispatch({type: loginActions.ON_PASSWORD_CHANGE, password})
+          }
+          returnKeyType={'done'}
+        />
+      )}
+      {!isDev && (
+        <View style={styles.forgotPassword}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgotPasswordScreen')}
+          >
+            <Text style={styles.forgot}>Forgot your password?</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <Button mode="contained" onPress={onLoginPressed}>
         Login
       </Button>

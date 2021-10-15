@@ -1,7 +1,7 @@
 import Realm from 'realm';
 import _ from 'lodash';
-import InitialSettings from '../../config/initialSettings';
-import Config from '../framework/Config';
+import InitialSettings from '../../../config/initialSettings';
+import Config from '../../framework/Config';
 
 class Settings extends Realm.Object {
   static UUID = '2aa81079-38c3-4d9f-8380-f50544b32b3d';

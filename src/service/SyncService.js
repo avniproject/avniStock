@@ -4,8 +4,8 @@ import BaseService from './BaseService';
 import EntityService from './EntityService';
 import EntitySyncStatusService from './EntitySyncStatusService';
 import SettingsService from './SettingsService';
-import EntityMetaData from '../models/EntityMetaData';
-import EntitySyncStatus from '../models/EntitySyncStatus';
+import EntityMetaData from '../models/framework/EntityMetaData';
+import EntitySyncStatus from '../models/framework/EntitySyncStatus';
 import EntityQueueService from './EntityQueueService';
 import ProgressbarStatus from './ProgressbarStatus';
 import _ from 'lodash';
@@ -108,7 +108,13 @@ class SyncService extends BaseService {
       )
       .then(() => onAfterMediaPush('After_Media', 0))
       .then(() => statusMessageCallBack('Fetching changed resources'))
-      .then(() => post(`${serverURL}/syncDetails`, entitySyncStatus, true))
+      .then(() =>
+        post(
+          `${serverURL}/syncDetails?isStockApp=${true}`,
+          entitySyncStatus,
+          true,
+        ),
+      )
       .then(res => res.json());
 
     const filteredMetadata = _.filter(allEntitiesMetaData, ({entityName}) =>
