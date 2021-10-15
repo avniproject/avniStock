@@ -8,10 +8,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import RestockNeededScreen from '../screens/RestockNeededScreen';
 import SellStockScreen from '../screens/SellStockScreen';
 import AddStockScreen from '../screens/AddStockScreen';
+import Colors from '../styles/Colors';
 
 const Tab = createBottomTabNavigator();
 
-const getIconForRoute = (routeName, size, color, focused) => {
+const getIconForRoute = (routeName, size, color) => {
   switch (routeName) {
     case 'Product List':
       return <FontAwesome name={'cubes'} size={size} color={color} />;
@@ -36,8 +37,14 @@ const BottomTabNavigator = () => {
       initialRouteName={'Product List'}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) =>
-          getIconForRoute(route.name, size, color, focused),
+          getIconForRoute(route.name, size, color),
         headerShown: false,
+        tabBarActiveTintColor: Colors.surface,
+        tabBarActiveBackgroundColor: Colors.primary,
+        tabBarInactiveBackgroundColor: Colors.surface,
+        tabBarStyle: {
+          display: 'flex',
+        },
       })}
     >
       <Tab.Screen name="Add Stock" component={AddStockScreen} />

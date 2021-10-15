@@ -1,11 +1,13 @@
 import {combineReducers} from 'redux';
 import {loginReducer} from './LoginReducer';
 import {syncReducer} from './SyncReducer';
+import {productReducer} from './ProductReducer';
 import General from '../utility/General';
 
 const appReducer = combineReducers({
   login: loginReducer,
   sync: syncReducer,
+  product: productReducer,
 });
 
 const rootReducer = (state, action) => {

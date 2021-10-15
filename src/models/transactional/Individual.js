@@ -68,7 +68,7 @@ class Individual extends Realm.Object {
 
   getObservationReadableValue(conceptName) {
     const observationForConcept = this.findObservation(conceptName);
-    return _.isEmpty(observationForConcept)
+    return _.isNil(observationForConcept)
       ? observationForConcept
       : observationForConcept.getReadableValue();
   }

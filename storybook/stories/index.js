@@ -1,2 +1,2 @@
-import './component/Home.stories';
 import './component/Spinner.stories';
+import './component/ProductCard.stories';
