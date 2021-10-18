@@ -4,7 +4,12 @@ import Colors from '../styles/Colors';
 import Sync from './Sync';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function AppBar({title = '', navigation, showBackButton}) {
+export default function AppBar({
+  title = '',
+  navigation,
+  showBackButton,
+  loginSync = false,
+}) {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -17,7 +22,11 @@ export default function AppBar({title = '', navigation, showBackButton}) {
         )}
         <Text style={styles.header}>{title}</Text>
       </View>
-      <View>{!showBackButton && <Sync navigation={navigation} />}</View>
+      <View>
+        {!showBackButton && (
+          <Sync navigation={navigation} loginSync={loginSync} />
+        )}
+      </View>
     </View>
   );
 }

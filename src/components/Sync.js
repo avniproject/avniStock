@@ -17,10 +17,17 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Badge from './Badge';
 import Colors from '../styles/Colors';
 
-export default function Sync({navigation}) {
+export default function Sync({navigation, loginSync}) {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.sync);
   const netInfo = useNetInfo();
+
+  React.useEffect(() => {
+    if (loginSync) {
+      const skipConnectCheck = true;
+      startSync(skipConnectCheck);
+    }
+  }, [loginSync]);
 
   function _preSync() {
     dispatch({type: syncActions.PRE_SYNC});
@@ -39,7 +46,7 @@ export default function Sync({navigation}) {
     dispatch({type: 'RESET'});
     navigation.reset({
       index: 0,
-      routes: [{name: 'Product List'}],
+      routes: [{name: 'Product List', params: {loginSync: false}}],
     });
   }
 
@@ -79,8 +86,8 @@ export default function Sync({navigation}) {
     ]);
   }
 
-  function startSync() {
-    if (netInfo.isConnected) {
+  function startSync(skipConnectCheck) {
+    if (skipConnectCheck || netInfo.isConnected) {
       _preSync();
       getService(SyncService)
         .sync(

@@ -38,7 +38,6 @@ class Individual extends Realm.Object {
   }
 
   static fromResource(individualResource, entityService) {
-    console.log('individualResource =>>>', individualResource);
     const subjectType = entityService.findByKey(
       'uuid',
       ResourceUtil.getUUIDFor(individualResource, 'subjectTypeUUID'),

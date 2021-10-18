@@ -8,9 +8,10 @@ import Separator from '../components/Separator';
 import Colors from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/core';
 
-const ProductListScreen = ({navigation}) => {
+const ProductListScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const {products} = useSelector(storeState => storeState.product);
+  const loginSync = route.params && route.params.loginSync;
 
   useFocusEffect(
     useCallback(() => {
@@ -35,7 +36,11 @@ const ProductListScreen = ({navigation}) => {
 
   return (
     <Fragment>
-      <AppBar title={'Product List'} navigation={navigation} />
+      <AppBar
+        title={'Product List'}
+        navigation={navigation}
+        loginSync={loginSync}
+      />
       <SafeAreaView>
         <FlatList
           data={products}

@@ -23,7 +23,7 @@ export default function LoginScreen({navigation}) {
       success: () =>
         navigation.reset({
           index: 0,
-          routes: [{name: 'HomeScreen'}],
+          routes: [{name: 'HomeScreen', params: {loginSync: true}}],
         }),
       resetPassword: cognitoUser =>
         navigation.navigate('ResetPasswordScreen', {cognitoUser}),

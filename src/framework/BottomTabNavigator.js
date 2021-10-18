@@ -31,7 +31,7 @@ const getIconForRoute = (routeName, size, color) => {
   }
 };
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({route}) => {
   return (
     <Tab.Navigator
       initialRouteName={'Product List'}
@@ -48,7 +48,11 @@ const BottomTabNavigator = () => {
       })}
     >
       <Tab.Screen name="Add Stock" component={AddStockScreen} />
-      <Tab.Screen name="Product List" component={ProductListScreen} />
+      <Tab.Screen
+        name="Product List"
+        component={ProductListScreen}
+        initialParams={route.params}
+      />
       <Tab.Screen name="Sell" component={SellStockScreen} />
       <Tab.Screen name="Restock needed" component={RestockNeededScreen} />
     </Tab.Navigator>
