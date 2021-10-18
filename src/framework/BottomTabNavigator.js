@@ -9,12 +9,8 @@ import RestockNeededScreen from '../screens/RestockNeededScreen';
 import SellStockScreen from '../screens/SellStockScreen';
 import AddStockScreen from '../screens/AddStockScreen';
 import Colors from '../styles/Colors';
-import ProductDetailsScreen from '../screens/ProductDetailsScreen';
-import EditProductScreen from '../screens/EditProductScreen';
-import {createStackNavigator} from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 const getIconForRoute = (routeName, size, color) => {
   switch (routeName) {
@@ -35,19 +31,6 @@ const getIconForRoute = (routeName, size, color) => {
   }
 };
 
-const productListNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={'Product Listing'}
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen name="Product Listing" component={ProductListScreen} />
-    <Stack.Screen name="Product Details" component={ProductDetailsScreen} />
-    <Stack.Screen name="Edit Product" component={EditProductScreen} />
-  </Stack.Navigator>
-);
-
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
@@ -65,7 +48,7 @@ const BottomTabNavigator = () => {
       })}
     >
       <Tab.Screen name="Add Stock" component={AddStockScreen} />
-      <Tab.Screen name="Product List" component={productListNavigator} />
+      <Tab.Screen name="Product List" component={ProductListScreen} />
       <Tab.Screen name="Sell" component={SellStockScreen} />
       <Tab.Screen name="Restock needed" component={RestockNeededScreen} />
     </Tab.Navigator>

@@ -1,31 +1,29 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useCallback} from 'react';
 import AppBar from '../components/AppBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {productActions} from '../reducers/ProductReducer';
 import ProductCard from '../components/ProductCard';
-import {
-  SafeAreaView,
-  TouchableNativeFeedback,
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
+import {SafeAreaView, FlatList, StyleSheet, Text} from 'react-native';
 import Separator from '../components/Separator';
 import Colors from '../styles/Colors';
+import {useFocusEffect} from '@react-navigation/core';
 
 const ProductListScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {products} = useSelector(storeState => storeState.product);
-  useEffect(() => {
-    dispatch({type: productActions.ON_LOAD});
-  }, [dispatch]);
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch({type: productActions.ON_LOAD});
+      return () => {};
+    }, [dispatch]),
+  );
 
   const renderProduct = ({item}) => (
     <ProductCard
       name={item.name}
       unit={item.unit}
-      quantity={item.initialStock}
+      quantity={item.totalStock}
       uuid={item.uuid}
       navigation={navigation}
     />

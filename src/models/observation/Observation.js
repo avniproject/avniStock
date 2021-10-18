@@ -1,25 +1,13 @@
 import _ from 'lodash';
 import Realm from 'realm';
+import {ConceptModel} from '../reference/Concept';
 
 class Observation extends Realm.Object {
-  static create(concept, value, abnormal = false) {
+  static create(concept, value) {
     return {
       concept: concept,
       valueJSON: value,
-      abnormal: abnormal,
     };
-  }
-
-  static valueForDisplay(observation, conceptService) {
-    const valueWrapper = observation.getValueWrapper();
-    if (valueWrapper.isSingleCoded) {
-      return conceptService.getConceptByUUID(valueWrapper.getConceptUUID())
-        .name;
-    }
-    const unit = _.defaultTo(observation.concept.unit, '');
-    return unit !== ''
-      ? _.toString(`${valueWrapper.getValue()} ${unit}`)
-      : _.toString(`${valueWrapper.getValue()}`);
   }
 
   cloneForEdit() {
@@ -72,5 +60,44 @@ Observation.schema = {
     valueJSON: 'string',
   },
 };
+
+export class ObservationModel {
+  constructor({concept, valueJSON}) {
+    this.concept = new ConceptModel(concept);
+    this.valueJSON = valueJSON;
+  }
+
+  static create(concept, value) {
+    const conceptModel = new ConceptModel(concept);
+    return new ObservationModel({concept: conceptModel, valueJSON: value});
+  }
+
+  getValueWrapper() {
+    if (_.isString(this.valueJSON)) {
+      let valueParsed = JSON.parse(this.valueJSON);
+      return this.concept.getValueWrapperFor(valueParsed.answer);
+    }
+    return this.valueJSON;
+  }
+  getValue() {
+    return this.getValueWrapper().getValue();
+  }
+
+  setValue(valueWrapper) {
+    this.valueJSON = valueWrapper;
+  }
+
+  getReadableValue() {
+    let value = this.getValue();
+    if (!_.isNil(value)) {
+      if (this.concept.isCodedConcept()) {
+        return this.concept.answers.find(
+          conceptAnswer => conceptAnswer.concept.uuid === value,
+        ).name;
+      }
+      return value;
+    }
+  }
+}
 
 export default Observation;

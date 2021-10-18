@@ -63,11 +63,11 @@ class Concept extends Realm.Object {
   }
 
   static create(name, dataType, uuid = General.randomUUID()) {
-    const concept = new Concept();
-    concept.name = name;
-    concept.datatype = dataType;
-    concept.uuid = uuid;
-    return concept;
+    return {
+      name: name,
+      datatype: dataType,
+      uuid: uuid,
+    };
   }
 
   cloneForReference() {
@@ -135,5 +135,31 @@ ConceptAnswer.schema = {
     voided: {type: 'bool', default: false},
   },
 };
+
+export class ConceptModel {
+  constructor(concept) {
+    this.uuid = concept.uuid;
+    this.name = concept.name;
+    this.datatype = concept.datatype;
+    this.answers = concept.answers;
+    this.lowAbsolute = concept.lowAbsolute;
+    this.hiAbsolute = concept.hiAbsolute;
+    this.lowNormal = concept.lowNormal;
+    this.hiNormal = concept.hiNormal;
+    this.unit = concept.unit;
+    this.voided = concept.voided;
+  }
+
+  isCodedConcept() {
+    return this.datatype === Concept.dataType.Coded;
+  }
+
+  getValueWrapperFor(obsValue) {
+    if (this.isCodedConcept()) {
+      return new SingleCodedValue(obsValue);
+    }
+    return new PrimitiveValue(obsValue, this.datatype);
+  }
+}
 
 export default Concept;

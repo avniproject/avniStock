@@ -4,6 +4,8 @@ import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomTabNavigator from './BottomTabNavigator';
+import ProductDetailsScreen from '../screens/ProductDetailsScreen';
+import EditProductScreen from '../screens/EditProductScreen';
 
 export default function Navigator({userExists}) {
   const Stack = createStackNavigator();
@@ -25,6 +27,8 @@ export default function Navigator({userExists}) {
         name="ResetPasswordScreen"
         component={ResetPasswordScreen}
       />
+      <Stack.Screen name="Product Details" component={ProductDetailsScreen} />
+      <Stack.Screen name="Edit Product" component={EditProductScreen} />
     </Stack.Navigator>
   );
 }

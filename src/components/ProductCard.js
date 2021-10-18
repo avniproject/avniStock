@@ -20,7 +20,7 @@ export default function ProductCard({name, unit, quantity, uuid, navigation}) {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <TouchableNativeFeedback onPress={onCardPress}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', flex: 1}}>
             <View style={{alignSelf: 'center'}}>
               <Image
                 source={require('../assets/medicine.png')}

@@ -17,13 +17,14 @@ class Individual extends Realm.Object {
       uuid: General.randomUUID(),
       subjectType: SubjectType.create(''),
       name: '',
+      addressLevelUUID: '',
       registrationDate: new Date(),
       observations: [],
     };
   }
 
   get toResource() {
-    const resource = _.pick(this, ['uuid', 'voided']);
+    const resource = _.pick(this, ['uuid', 'voided', 'addressLevelUUID']);
     resource.firstName = this.name;
     resource.registrationDate = moment(this.registrationDate).format(
       'YYYY-MM-DD',
@@ -37,6 +38,7 @@ class Individual extends Realm.Object {
   }
 
   static fromResource(individualResource, entityService) {
+    console.log('individualResource =>>>', individualResource);
     const subjectType = entityService.findByKey(
       'uuid',
       ResourceUtil.getUUIDFor(individualResource, 'subjectTypeUUID'),
@@ -49,6 +51,10 @@ class Individual extends Realm.Object {
       ['registrationDate'],
       ['observations'],
       entityService,
+    );
+    individual.addressLevelUUID = ResourceUtil.getUUIDFor(
+      individualResource,
+      'addressUUID',
     );
     individual.subjectType = subjectType;
     individual.name = individualResource.firstName;
@@ -85,6 +91,10 @@ class Individual extends Realm.Object {
     );
   }
 
+  get totalStock() {
+    return this.initialStock;
+  }
+
   get unit() {
     return this.getObservationReadableValue(Individual.conceptNames.unit);
   }
@@ -100,6 +110,7 @@ Individual.schema = {
     registrationDate: 'date',
     voided: {type: 'bool', default: false},
     observations: {type: 'list', objectType: 'Observation'},
+    addressLevelUUID: 'string',
   },
 };
 export default Individual;

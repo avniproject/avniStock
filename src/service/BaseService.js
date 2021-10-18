@@ -57,6 +57,16 @@ class BaseService {
     );
   }
 
+  findByName(name, schema = this.getSchema()) {
+    if (!_.isEmpty(name)) {
+      return this.findByKey('name', name, schema);
+    }
+    General.logError(
+      'BaseService',
+      `Entity ${schema}{name=${name},..} not found`,
+    );
+  }
+
   findByCriteria(filterCriteria, schema) {
     const allEntities = this.findAllByCriteria(filterCriteria, schema);
     return this.getReturnValue(allEntities);
