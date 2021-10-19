@@ -10,7 +10,11 @@ const AddStockScreen = ({navigation}) => {
 
   return (
     <Fragment>
-      <AppBar title={'Add stock'} navigation={navigation} />
+      <AppBar
+        title={'Add stock'}
+        navigation={navigation}
+        showBackButton={true}
+      />
       <Background>
         <Header>Add Stock Screen</Header>
       </Background>

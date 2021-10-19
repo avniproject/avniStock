@@ -24,17 +24,18 @@ const getIconForRoute = (routeName, size, color) => {
       return (
         <Fontisto name={'shopping-basket-add'} size={size} color={color} />
       );
-    case 'Sell':
+    case 'Remove Stock':
       return (
         <FontAwesome5 name={'ruler-horizontal'} size={size} color={color} />
       );
   }
 };
 
-const BottomTabNavigator = ({route}) => {
+const BottomTabNavigator = ({route, navigation}) => {
   return (
     <Tab.Navigator
       initialRouteName={'Product List'}
+      backBehavior={'history'}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) =>
           getIconForRoute(route.name, size, color),
@@ -43,7 +44,9 @@ const BottomTabNavigator = ({route}) => {
         tabBarActiveBackgroundColor: Colors.primary,
         tabBarInactiveBackgroundColor: Colors.surface,
         tabBarStyle: {
-          display: 'flex',
+          display: ['Add Stock', 'Remove Stock'].includes(route.name)
+            ? 'none'
+            : 'flex',
         },
       })}
     >
@@ -53,7 +56,7 @@ const BottomTabNavigator = ({route}) => {
         component={ProductListScreen}
         initialParams={route.params}
       />
-      <Tab.Screen name="Sell" component={SellStockScreen} />
+      <Tab.Screen name="Remove Stock" component={SellStockScreen} />
       <Tab.Screen name="Restock needed" component={RestockNeededScreen} />
     </Tab.Navigator>
   );

@@ -8,7 +8,7 @@ import SyncService from '../service/SyncService';
 import EntityMetaData from '../models/framework/EntityMetaData';
 import SyncError from '../service/error/SyncError';
 import EntitySyncStatusService from '../service/EntitySyncStatusService';
-import React from 'react';
+import React, {useCallback} from 'react';
 import SyncProgressBar from './SyncProgressBar';
 import {syncActions} from '../reducers/SyncReducer';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,11 +16,22 @@ import {getService} from '../hooks/getService';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Badge from './Badge';
 import Colors from '../styles/Colors';
+import {useFocusEffect} from '@react-navigation/core';
 
 export default function Sync({navigation, loginSync}) {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.sync);
   const netInfo = useNetInfo();
+  const [syncCount, setSyncCount] = React.useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      setSyncCount(
+        getService(EntitySyncStatusService).getTotalEntitiesPending(),
+      );
+      return () => {};
+    }, []),
+  );
 
   React.useEffect(() => {
     if (loginSync) {
@@ -46,7 +57,7 @@ export default function Sync({navigation, loginSync}) {
     dispatch({type: 'RESET'});
     navigation.reset({
       index: 0,
-      routes: [{name: 'Product List', params: {loginSync: false}}],
+      routes: [{name: 'HomeScreen', params: {loginSync: false}}],
     });
   }
 
@@ -107,9 +118,7 @@ export default function Sync({navigation, loginSync}) {
       <TouchableNativeFeedback onPress={() => startSync()}>
         <View>
           <Badge
-            number={getService(
-              EntitySyncStatusService,
-            ).getTotalEntitiesPending()}
+            number={syncCount}
             component={<FontAwesome5 name={'sync'} style={styles.icon} />}
           />
         </View>

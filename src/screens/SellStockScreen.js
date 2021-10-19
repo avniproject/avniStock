@@ -10,9 +10,13 @@ const SellStockScreen = ({navigation}) => {
 
   return (
     <Fragment>
-      <AppBar title={'Sell stock'} navigation={navigation} />
+      <AppBar
+        title={'Remove Stock'}
+        navigation={navigation}
+        showBackButton={true}
+      />
       <Background>
-        <Header>Sell Stock Screen</Header>
+        <Header>Remove Stock Screen</Header>
       </Background>
     </Fragment>
   );

@@ -17,7 +17,11 @@ export default function AppBar({
           <MaterialCommunityIcons
             name={'arrow-left'}
             style={styles.icon}
-            onPress={() => navigation.goBack()}
+            onPress={() =>
+              navigation.canGoBack()
+                ? navigation.goBack()
+                : navigation.navigate('Product List')
+            }
           />
         )}
         <Text style={styles.header}>{title}</Text>
