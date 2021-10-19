@@ -6,7 +6,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RestockNeededScreen from '../screens/RestockNeededScreen';
-import SellStockScreen from '../screens/SellStockScreen';
+import RemoveStockScreen from '../screens/RemoveStockScreen';
 import AddStockScreen from '../screens/AddStockScreen';
 import Colors from '../styles/Colors';
 
@@ -56,7 +56,7 @@ const BottomTabNavigator = ({route, navigation}) => {
         component={ProductListScreen}
         initialParams={route.params}
       />
-      <Tab.Screen name="Remove Stock" component={SellStockScreen} />
+      <Tab.Screen name="Remove Stock" component={RemoveStockScreen} />
       <Tab.Screen name="Restock needed" component={RestockNeededScreen} />
     </Tab.Navigator>
   );

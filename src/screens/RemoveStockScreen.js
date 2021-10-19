@@ -3,9 +3,9 @@ import Header from '../components/Header';
 import React, {Fragment, useEffect} from 'react';
 import AppBar from '../components/AppBar';
 
-const SellStockScreen = ({navigation}) => {
+const RemoveStockScreen = ({navigation}) => {
   useEffect(() => {
-    console.log('SellStockScreen mounted');
+    console.log('RemoveStockScreen mounted');
   }, []);
 
   return (
@@ -22,4 +22,4 @@ const SellStockScreen = ({navigation}) => {
   );
 };
 
-export default SellStockScreen;
+export default RemoveStockScreen;

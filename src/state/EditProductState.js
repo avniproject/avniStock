@@ -2,24 +2,22 @@ import ObservationsHolder from '../models/observation/ObservationsHolder';
 import Individual from '../models/transactional/Individual';
 
 class EditProductState {
-  constructor(uuid, name, observations = []) {
-    this.uuid = uuid;
-    this.name = name;
-    this.observationHolder = new ObservationsHolder(observations);
+  constructor() {
+    this.product = Individual.createEmptyInstance();
+    this.observationHolder = new ObservationsHolder(this.product.observations);
   }
 
   static onLoad(product) {
     const state = new EditProductState();
-    state.uuid = product.uuid;
-    state.name = product.name;
+    state.product.uuid = product.uuid;
+    state.product.name = product.name;
     state.observationHolder = new ObservationsHolder(product.observations);
     return state;
   }
 
   clone() {
     const newState = new EditProductState();
-    newState.uuid = this.uuid;
-    newState.name = this.name;
+    newState.product = this.product;
     newState.observationHolder = this.observationHolder;
     return newState;
   }

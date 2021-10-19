@@ -1,7 +1,20 @@
 import _ from 'lodash';
 import Realm from 'realm';
+import General from '../../utility/General';
 
 class Program extends Realm.Object {
+  static programName = 'Add stock';
+
+  static create(name) {
+    return {
+      uuid: General.randomUUID(),
+      name: name,
+      displayName: name,
+      operationalProgramName: name,
+      voided: false,
+    };
+  }
+
   static fromResource(operationalProgram): Program {
     return {
       uuid: operationalProgram.programUUID,

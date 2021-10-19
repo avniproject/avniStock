@@ -7,6 +7,8 @@ import Program from '../reference/Program';
 import SubjectType from '../reference/SubjectType';
 import Individual from '../transactional/Individual';
 import UserInfo from '../reference/UserInfo';
+import ProgramEnrolment from '../transactional/ProgramEnrolment';
+import ProgramEncounter from '../transactional/ProgramEncounter';
 
 const refData = (
   clazz,
@@ -60,6 +62,16 @@ const individual = txData(Individual, {
   syncWeight: 40,
   privilegeParam: 'subjectTypeUuid',
 });
+const programEnrolment = txData(ProgramEnrolment, {
+  parent: individual,
+  syncWeight: 5,
+  privilegeParam: 'programUuid',
+});
+const programEncounter = txData(ProgramEncounter, {
+  parent: programEnrolment,
+  syncWeight: 9,
+  privilegeParam: 'programEncounterTypeUuid',
+});
 
 class EntityMetaData {
   //order is important. last entity in each (tx and ref) with be executed first. parent should be synced before the child.
@@ -70,6 +82,8 @@ class EntityMetaData {
       subjectType,
       conceptAnswer,
       concept,
+      programEncounter,
+      programEnrolment,
       individual,
       userInfo,
     ];

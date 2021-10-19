@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useCallback} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import AppBar from '../components/AppBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {editProductActions} from '../reducers/EditProductReducer';
@@ -7,12 +7,11 @@ import Colors from '../styles/Colors';
 import TextInput from '../components/TextInput';
 import _ from 'lodash';
 import BottomActionButtons from '../components/BottomActionButtons';
-import {useFocusEffect} from '@react-navigation/native';
 
 const EditProductScreen = ({navigation, route}) => {
   const {productUUID} = route.params;
   const dispatch = useDispatch();
-  const product = useSelector(storeState => storeState.editProduct);
+  const state = useSelector(storeState => storeState.editProduct);
 
   useEffect(() => {
     dispatch({type: editProductActions.ON_LOAD, productUUID});
@@ -35,11 +34,11 @@ const EditProductScreen = ({navigation, route}) => {
         showBackButton={true}
       />
       <SafeAreaView style={styles.container}>
-        <TextInput label="Name" disabled={true} value={product.name} />
+        <TextInput label="Name" disabled={true} value={state.product.name} />
         <TextInput
           label="Initial Stock"
           returnKeyType="next"
-          value={_.toString(product.initialStock)}
+          value={_.toString(state.initialStock)}
           onChangeText={initialStock =>
             dispatch({
               type: editProductActions.ON_INITIAL_STOCK_CHANGE,
@@ -50,7 +49,7 @@ const EditProductScreen = ({navigation, route}) => {
         />
         <TextInput
           label="Restock Level"
-          value={_.toString(product.restockLevel)}
+          value={_.toString(state.restockLevel)}
           onChangeText={restockLevel =>
             dispatch({
               type: editProductActions.ON_RESTOCK_LEVEL_CHANGE,
@@ -62,7 +61,7 @@ const EditProductScreen = ({navigation, route}) => {
         <TextInput
           label="Current Stock"
           disabled={true}
-          value={_.toString(product.totalStock)}
+          value={_.toString(state.totalStock)}
         />
         <View
           style={{

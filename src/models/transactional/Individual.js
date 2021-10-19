@@ -4,6 +4,8 @@ import SubjectType from '../reference/SubjectType';
 import General from '../../utility/General';
 import _ from 'lodash';
 import ResourceUtil from '../utility/ResourceUtil';
+import BaseEntity from '../framework/BaseEntity';
+import ProgramEnrolment from './ProgramEnrolment';
 
 class Individual extends Realm.Object {
   static conceptNames = {
@@ -60,6 +62,28 @@ class Individual extends Realm.Object {
     return individual;
   }
 
+  static merge = childEntityClass =>
+    BaseEntity.mergeOn(
+      new Map([[ProgramEnrolment, 'enrolments']]).get(childEntityClass),
+    );
+
+  static associateChild(child, childEntityClass, childResource, entityService) {
+    var individual = BaseEntity.getParentEntity(
+      entityService,
+      childEntityClass,
+      childResource,
+      'individualUUID',
+      Individual.schema.name,
+    );
+    individual = General.pick(individual, ['uuid'], ['enrolments']);
+    if (childEntityClass === ProgramEnrolment) {
+      BaseEntity.addNewChild(child, individual.enrolments);
+    } else {
+      throw `${childEntityClass.name} not support by ${individual.nameString}`;
+    }
+    return individual;
+  }
+
   clone() {
     const individual = this.toJSON();
     return _.cloneDeep(individual);
@@ -110,6 +134,7 @@ Individual.schema = {
     voided: {type: 'bool', default: false},
     observations: {type: 'list', objectType: 'Observation'},
     addressLevelUUID: 'string',
+    enrolments: {type: 'list', objectType: 'ProgramEnrolment'},
   },
 };
 export default Individual;

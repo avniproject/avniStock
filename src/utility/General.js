@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Observation from '../models/observation/Observation';
+import moment from 'moment';
 
 var currentLogLevel;
 
@@ -158,6 +159,20 @@ class General {
       });
     }
     return picked;
+  }
+
+  static toDisplayDate(date) {
+    return moment(date).format('DD-MMM-YYYY');
+  }
+
+  static toTwoChars(number) {
+    return `${number}`.length === 1 ? `0${number}` : `${number}`;
+  }
+
+  static isoFormat(date) {
+    return `${date.getFullYear()}-${General.toTwoChars(
+      date.getMonth() + 1,
+    )}-${General.toTwoChars(date.getDate())}`;
   }
 }
 

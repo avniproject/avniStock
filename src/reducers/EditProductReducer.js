@@ -16,7 +16,7 @@ const editProductActions = {
   ON_SAVE: `${prefix}_ON_SAVE`,
 };
 
-const initialState = new EditProductState('', '', []);
+const initialState = new EditProductState();
 
 const editProductReducer = (state = initialState, action) => {
   function onInitialStockChange(state, action) {

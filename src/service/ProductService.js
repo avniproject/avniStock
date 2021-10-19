@@ -19,16 +19,16 @@ class ProductService extends BaseService {
     return this.getAllNonVoided().sorted('name');
   }
 
-  updateProduct(product) {
+  updateProduct(editProductState) {
     const db = this.db;
-    const savedProduct = this.findByUUID(product.uuid);
-    ObservationsHolder.convertObsForSave(product.observations);
+    const savedProduct = this.findByUUID(editProductState.product.uuid);
+    ObservationsHolder.convertObsForSave(editProductState.observations);
     db.write(() => {
-      savedProduct.observations = product.observations;
+      savedProduct.observations = editProductState.observations;
       db.create(this.getSchema(), savedProduct, Realm.UpdateMode.Modified);
       db.create(
         EntityQueue.schema.name,
-        EntityQueue.create(savedProduct, Individual.schema.name),
+        EntityQueue.create(savedProduct, this.getSchema()),
       );
     });
   }

@@ -3,6 +3,7 @@ import {loginReducer} from './LoginReducer';
 import {syncReducer} from './SyncReducer';
 import {productReducer} from './ProductReducer';
 import {editProductReducer} from './EditProductReducer';
+import {stockReducer} from './StockReducer';
 import General from '../utility/General';
 
 const appReducer = combineReducers({
@@ -10,6 +11,7 @@ const appReducer = combineReducers({
   sync: syncReducer,
   product: productReducer,
   editProduct: editProductReducer,
+  stock: stockReducer,
 });
 
 const rootReducer = (state, action) => {

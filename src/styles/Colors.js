@@ -5,6 +5,7 @@ const Colors = {
   secondary: '#414757',
   error: '#f13a59',
   green: '#00a596',
+  border: 'rgba(0,0,0,0.49)',
 };
 
 export default Colors;

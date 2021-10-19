@@ -1,7 +1,18 @@
 import _ from 'lodash';
 import Realm from 'realm';
+import General from '../../utility/General';
 
 class EncounterType extends Realm.Object {
+  static create(name) {
+    return {
+      uuid: General.randomUUID(),
+      name: name,
+      operationalEncounterTypeName: name,
+      displayName: name,
+      voided: false,
+    };
+  }
+
   static fromResource(operationalEncounterType) {
     return {
       name: operationalEncounterType.encounterTypeName,

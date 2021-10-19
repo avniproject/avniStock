@@ -27,8 +27,6 @@ class Concept extends Realm.Object {
     NA: 'NA',
   };
 
-  static childAssociations = () => new Map([[ConceptAnswer, 'answers']]);
-
   static associateChild(child, childEntityClass, childResource, entityService) {
     let concept = BaseEntity.getParentEntity(
       entityService,
