@@ -20,7 +20,7 @@ const ProductDetailsScreen = ({navigation, route}) => {
         navigation={navigation}
         showBackButton={true}
       />
-      <ProductDetails product={product} />
+      <ProductDetails product={product} navigation={navigation} />
     </Fragment>
   );
 };

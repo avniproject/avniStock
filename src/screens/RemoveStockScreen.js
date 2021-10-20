@@ -12,14 +12,14 @@ import BottomActionButtons from '../components/BottomActionButtons';
 import BatchNumberDropdown from '../components/BatchNumberDropdown';
 import ProgramEncounter from '../models/transactional/ProgramEncounter';
 
-const RemoveStockScreen = ({navigation}) => {
+const RemoveStockScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.removeStock);
   const stock = state.stock;
-
+  const productRemovalUUID = route.params && route.params.productRemovalUUID;
   useFocusEffect(
     useCallback(() => {
-      dispatch({type: removeStockActions.ON_LOAD});
+      dispatch({type: removeStockActions.ON_LOAD, productRemovalUUID});
       return () => {};
     }, [dispatch]),
   );

@@ -26,6 +26,10 @@ class StockService extends BaseService {
     }));
   }
 
+  getStocksByProductUUID(productUUID) {
+    return this.getAllNonVoided().filtered('individual.uuid = $0', productUUID);
+  }
+
   saveOrUpdate(stockState) {
     const db = this.db;
     ObservationsHolder.convertObsForSave(stockState.observations);

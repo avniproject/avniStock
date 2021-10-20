@@ -6,7 +6,6 @@ import Realm from 'realm';
 import EntityQueue from '../models/framework/EntityQueue';
 import ProgramEncounter from '../models/transactional/ProgramEncounter';
 import EncounterType from '../models/reference/EncounterType';
-import _ from 'lodash';
 import StockService from './StockService';
 
 @Service('removeStockService')
@@ -17,6 +16,13 @@ class RemoveStockService extends BaseService {
 
   getSchema() {
     return ProgramEncounter.schema.name;
+  }
+
+  getRemovedListForProductUUID(productUUID) {
+    return this.getAllNonVoided().filtered(
+      'programEnrolment.individual.uuid = $0',
+      productUUID,
+    );
   }
 
   saveOrUpdate(removeStockState) {

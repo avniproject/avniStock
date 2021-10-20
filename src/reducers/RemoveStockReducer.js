@@ -40,7 +40,7 @@ const removeStockReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case removeStockActions.ON_LOAD:
-      return RemoveStockState.onLoad(action.productUUID);
+      return RemoveStockState.onLoad(action.productRemovalUUID);
     case removeStockActions.ON_BATCH_NUMBER_CHANGE:
       return onBatchChange(state, action);
     case removeStockActions.ON_DATE_CHANGE:

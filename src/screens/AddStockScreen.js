@@ -12,16 +12,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import ProgramEnrolment from '../models/transactional/ProgramEnrolment';
 import {useFocusEffect} from '@react-navigation/core';
 
-const AddStockScreen = ({navigation}) => {
+const AddStockScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.stock);
   const stock = state.stock;
+  const productUUID = route.params && route.params.productUUID;
 
   useFocusEffect(
     useCallback(() => {
-      dispatch({type: stockActions.ON_LOAD});
+      dispatch({type: stockActions.ON_LOAD, productUUID});
       return () => {};
-    }, [dispatch]),
+    }, [dispatch, productUUID]),
   );
 
   const onCancel = () => {
