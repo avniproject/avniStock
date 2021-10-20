@@ -1,19 +1,25 @@
-import Background from '../components/Background';
-import Header from '../components/Header';
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import AppBar from '../components/AppBar';
+import {useFocusEffect} from '@react-navigation/core';
+import {getService} from '../hooks/getService';
+import ProductService from '../service/ProductService';
+import ProductList from '../components/ProductList';
 
 const RestockNeededScreen = ({navigation}) => {
-  useEffect(() => {
-    console.log('RestockNeededScreen mounted');
-  }, []);
+  const [products, setProducts] = useState([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const products = getService(ProductService).getRestockNeededProducts();
+      setProducts(products);
+      return () => {};
+    }, []),
+  );
 
   return (
     <Fragment>
       <AppBar title={'Restock needed'} navigation={navigation} />
-      <Background>
-        <Header>Restock Needed Screen</Header>
-      </Background>
+      <ProductList navigation={navigation} products={products} />
     </Fragment>
   );
 };

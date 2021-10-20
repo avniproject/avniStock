@@ -32,6 +32,12 @@ class ProductService extends BaseService {
       );
     });
   }
+
+  getRestockNeededProducts() {
+    return this.getSortedProductList().filter(
+      ind => ind.totalStock <= ind.restockLevel,
+    );
+  }
 }
 
 export default ProductService;

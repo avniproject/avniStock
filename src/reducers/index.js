@@ -1,7 +1,6 @@
 import {combineReducers} from 'redux';
 import {loginReducer} from './LoginReducer';
 import {syncReducer} from './SyncReducer';
-import {productReducer} from './ProductReducer';
 import {editProductReducer} from './EditProductReducer';
 import {stockReducer} from './StockReducer';
 import {removeStockReducer} from './RemoveStockReducer';
@@ -10,7 +9,6 @@ import General from '../utility/General';
 const appReducer = combineReducers({
   login: loginReducer,
   sync: syncReducer,
-  product: productReducer,
   editProduct: editProductReducer,
   stock: stockReducer,
   removeStock: removeStockReducer,
