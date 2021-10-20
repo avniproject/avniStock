@@ -93,6 +93,48 @@ class ProgramEnrolment extends Realm.Object {
     }
     return programEnrolment;
   }
+
+  findObservation(conceptName) {
+    return _.find(this.observations, observation => {
+      return observation.concept.name === conceptName;
+    });
+  }
+
+  getObservationReadableValue(conceptName) {
+    const observationForConcept = this.findObservation(conceptName);
+    return _.isNil(observationForConcept)
+      ? observationForConcept
+      : observationForConcept.getReadableValue();
+  }
+
+  get batchNumber() {
+    return this.getObservationReadableValue(
+      ProgramEnrolment.conceptNames.batchNumber,
+    );
+  }
+
+  get quantity() {
+    return this.getObservationReadableValue(
+      ProgramEnrolment.conceptNames.quantity,
+    );
+  }
+
+  get expiryDate() {
+    return this.getObservationReadableValue(
+      ProgramEnrolment.conceptNames.expiryDate,
+    );
+  }
+
+  addEncounter(programEncounter) {
+    if (
+      !_.some(
+        this.encounters,
+        encounter => encounter.uuid === programEncounter.uuid,
+      )
+    ) {
+      this.encounters.push(programEncounter);
+    }
+  }
 }
 
 ProgramEnrolment.schema = {

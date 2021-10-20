@@ -43,17 +43,17 @@ const AddStockScreen = ({navigation}) => {
       />
       <SafeAreaView style={{flex: 1}}>
         <Surface style={styles.container}>
-          <ProductDropdown
-            productUUID={stock.individual.uuid}
-            setProductUUID={productUUID =>
-              dispatch({type: stockActions.ON_PRODUCT_CHANGE, productUUID})
-            }
-          />
           <DateInput
             label={'Date'}
             date={stock.enrolmentDateTime}
             onDateChange={date =>
               dispatch({type: stockActions.ON_DATE_CHANGE, date})
+            }
+          />
+          <ProductDropdown
+            productUUID={stock.individual.uuid}
+            setProductUUID={productUUID =>
+              dispatch({type: stockActions.ON_PRODUCT_CHANGE, productUUID})
             }
           />
           <TextInput

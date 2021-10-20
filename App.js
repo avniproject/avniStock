@@ -12,7 +12,9 @@ import Spinner from './src/components/Spinner';
 import {NavigationContainer} from '@react-navigation/native';
 import EntitySyncStatusService from './src/service/EntitySyncStatusService';
 import EntityMetaData from './src/models/framework/EntityMetaData';
+import {LogBox} from 'react-native';
 
+LogBox.ignoreAllLogs();
 let beans, db;
 const theme = {
   ...DefaultTheme,

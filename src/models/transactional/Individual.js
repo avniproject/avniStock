@@ -121,6 +121,12 @@ class Individual extends Realm.Object {
   get unit() {
     return this.getObservationReadableValue(Individual.conceptNames.unit);
   }
+
+  addEnrolment(programEnrolment) {
+    if (!_.some(this.enrolments, x => x.uuid === programEnrolment.uuid)) {
+      this.enrolments.push(programEnrolment);
+    }
+  }
 }
 
 Individual.schema = {

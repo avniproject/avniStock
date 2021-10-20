@@ -7,6 +7,10 @@ import ResourceUtil from '../utility/ResourceUtil';
 import moment from 'moment';
 
 class ProgramEncounter extends Realm.Object {
+  static conceptNames = {
+    quantity: 'Quantity',
+  };
+
   static createEmptyInstance() {
     return {
       uuid: General.randomUUID(),
@@ -52,6 +56,25 @@ class ProgramEncounter extends Realm.Object {
     resource.name = this.name;
     resource.programEnrolmentUUID = this.programEnrolment.uuid;
     return resource;
+  }
+
+  findObservation(conceptName) {
+    return _.find(this.observations, observation => {
+      return observation.concept.name === conceptName;
+    });
+  }
+
+  getObservationReadableValue(conceptName) {
+    const observationForConcept = this.findObservation(conceptName);
+    return _.isNil(observationForConcept)
+      ? observationForConcept
+      : observationForConcept.getReadableValue();
+  }
+
+  get quantity() {
+    return this.getObservationReadableValue(
+      ProgramEncounter.conceptNames.quantity,
+    );
   }
 }
 
