@@ -114,8 +114,16 @@ class Individual extends Realm.Object {
     );
   }
 
+  getTotalAdded() {
+    return _.sum(_.map(this.enrolments, enl => enl.quantity));
+  }
+
+  getTotalRemoved() {
+    return _.sum(_.map(this.enrolments, enl => enl.getTotalRemovedItems()));
+  }
+
   get totalStock() {
-    return this.initialStock;
+    return this.initialStock + this.getTotalAdded() - this.getTotalRemoved();
   }
 
   get unit() {

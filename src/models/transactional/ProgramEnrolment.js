@@ -135,6 +135,10 @@ class ProgramEnrolment extends Realm.Object {
       this.encounters.push(programEncounter);
     }
   }
+
+  getTotalRemovedItems() {
+    return _.sum(_.map(this.encounters, enc => enc.quantity));
+  }
 }
 
 ProgramEnrolment.schema = {

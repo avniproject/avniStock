@@ -1,5 +1,6 @@
 import ObservationsHolder from '../models/observation/ObservationsHolder';
 import Individual from '../models/transactional/Individual';
+import _ from 'lodash';
 
 class EditProductState {
   constructor() {
@@ -11,13 +12,15 @@ class EditProductState {
     const state = new EditProductState();
     state.product.uuid = product.uuid;
     state.product.name = product.name;
+    state.product.totalAdded = product.getTotalAdded();
+    state.product.toalRemoved = product.getTotalRemoved();
     state.observationHolder = new ObservationsHolder(product.observations);
     return state;
   }
 
   clone() {
     const newState = new EditProductState();
-    newState.product = this.product;
+    newState.product = _.clone(this.product);
     newState.observationHolder = this.observationHolder;
     return newState;
   }
@@ -35,7 +38,9 @@ class EditProductState {
   }
 
   get totalStock() {
-    return this.initialStock;
+    return (
+      this.initialStock + this.product.totalAdded - this.product.toalRemoved
+    );
   }
 
   get observations() {

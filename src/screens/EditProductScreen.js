@@ -7,6 +7,7 @@ import Colors from '../styles/Colors';
 import TextInput from '../components/TextInput';
 import _ from 'lodash';
 import BottomActionButtons from '../components/BottomActionButtons';
+import Individual from '../models/transactional/Individual';
 
 const EditProductScreen = ({navigation, route}) => {
   const {productUUID} = route.params;
@@ -41,8 +42,11 @@ const EditProductScreen = ({navigation, route}) => {
           value={_.toString(state.initialStock)}
           onChangeText={initialStock =>
             dispatch({
-              type: editProductActions.ON_INITIAL_STOCK_CHANGE,
-              initialStock,
+              type: editProductActions.ON_PRIMITIVE_OBS_CHANGE,
+              payload: {
+                value: initialStock,
+                conceptName: Individual.conceptNames.initialStock,
+              },
             })
           }
           keyboardType="numeric"
@@ -52,8 +56,11 @@ const EditProductScreen = ({navigation, route}) => {
           value={_.toString(state.restockLevel)}
           onChangeText={restockLevel =>
             dispatch({
-              type: editProductActions.ON_RESTOCK_LEVEL_CHANGE,
-              restockLevel,
+              type: editProductActions.ON_PRIMITIVE_OBS_CHANGE,
+              payload: {
+                value: restockLevel,
+                conceptName: Individual.conceptNames.restockLevel,
+              },
             })
           }
           keyboardType="numeric"
