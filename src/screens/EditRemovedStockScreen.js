@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import AppBar from '../components/AppBar';
 import RemoveStock from '../components/RemoveStock';
 
-const RemoveStockScreen = ({navigation}) => {
+const EditRemovedStockScreen = ({navigation, route}) => {
   return (
     <Fragment>
       <AppBar
@@ -10,9 +10,12 @@ const RemoveStockScreen = ({navigation}) => {
         navigation={navigation}
         showBackButton={true}
       />
-      <RemoveStock navigation={navigation} />
+      <RemoveStock
+        navigation={navigation}
+        productRemovalUUID={route.params.productRemovalUUID}
+      />
     </Fragment>
   );
 };
 
-export default RemoveStockScreen;
+export default EditRemovedStockScreen;

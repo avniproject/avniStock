@@ -6,6 +6,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import BottomTabNavigator from './BottomTabNavigator';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import EditProductScreen from '../screens/EditProductScreen';
+import EditStockScreen from '../screens/EditStockScreen';
+import EditRemovedStockScreen from '../screens/EditRemovedStockScreen';
 
 export default function Navigator({userExists}) {
   const Stack = createStackNavigator();
@@ -29,6 +31,11 @@ export default function Navigator({userExists}) {
       />
       <Stack.Screen name="Product Details" component={ProductDetailsScreen} />
       <Stack.Screen name="Edit Product" component={EditProductScreen} />
+      <Stack.Screen name="Edit Stock" component={EditStockScreen} />
+      <Stack.Screen
+        name="Edit Removed Stock"
+        component={EditRemovedStockScreen}
+      />
     </Stack.Navigator>
   );
 }
