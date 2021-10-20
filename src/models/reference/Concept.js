@@ -25,6 +25,7 @@ class Concept extends Realm.Object {
     Numeric: 'Numeric',
     Text: 'Text',
     NA: 'NA',
+    Date: 'Date',
   };
 
   static associateChild(child, childEntityClass, childResource, entityService) {

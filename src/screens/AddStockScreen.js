@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useCallback} from 'react';
 import AppBar from '../components/AppBar';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import DateInput from '../components/DateInput';
@@ -9,18 +9,20 @@ import BottomActionButtons from '../components/BottomActionButtons';
 import ProductDropdown from '../components/ProductDropdown';
 import {stockActions} from '../reducers/StockReducer';
 import {useDispatch, useSelector} from 'react-redux';
-import General from '../utility/General';
-import moment from 'moment';
 import ProgramEnrolment from '../models/transactional/ProgramEnrolment';
+import {useFocusEffect} from '@react-navigation/core';
 
 const AddStockScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.stock);
   const stock = state.stock;
 
-  useEffect(() => {
-    dispatch({type: stockActions.ON_LOAD});
-  }, [dispatch]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch({type: stockActions.ON_LOAD});
+      return () => {};
+    }, [dispatch]),
+  );
 
   const onCancel = () => {
     navigation.goBack();
@@ -62,7 +64,7 @@ const AddStockScreen = ({navigation}) => {
               dispatch({
                 type: stockActions.ON_PRIMITIVE_OBS_CHANGE,
                 payload: {
-                  value: _.isNaN(quantity) ? 0 : _.floor(quantity),
+                  value: quantity,
                   conceptName: ProgramEnrolment.conceptNames.quantity,
                 },
               })
@@ -85,16 +87,12 @@ const AddStockScreen = ({navigation}) => {
           />
           <DateInput
             label={'Expiry Date'}
-            date={
-              _.isNil(state.expiryDate)
-                ? new Date()
-                : moment(state.expiryDate).toDate()
-            }
+            date={_.isNil(state.expiryDate) ? new Date() : state.expiryDate}
             onDateChange={date =>
               dispatch({
                 type: stockActions.ON_PRIMITIVE_OBS_CHANGE,
                 payload: {
-                  value: General.toDisplayDate(date),
+                  value: date,
                   conceptName: ProgramEnrolment.conceptNames.expiryDate,
                 },
               })

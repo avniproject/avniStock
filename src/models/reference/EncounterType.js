@@ -3,6 +3,8 @@ import Realm from 'realm';
 import General from '../../utility/General';
 
 class EncounterType extends Realm.Object {
+  static encounterTypeName = 'Remove stock';
+
   static create(name) {
     return {
       uuid: General.randomUUID(),

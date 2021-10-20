@@ -6,6 +6,7 @@ import Program from '../reference/Program';
 import Individual from './Individual';
 import ProgramEncounter from './ProgramEncounter';
 import BaseEntity from '../framework/BaseEntity';
+import moment from 'moment';
 
 class ProgramEnrolment extends Realm.Object {
   static conceptNames = {
@@ -20,6 +21,7 @@ class ProgramEnrolment extends Realm.Object {
       program: Program.create(''),
       enrolmentDateTime: new Date(),
       observations: [],
+      programExitObservations: [],
       programExitDateTime: null,
       individual: Individual.createEmptyInstance(),
       voided: false,
@@ -29,12 +31,18 @@ class ProgramEnrolment extends Realm.Object {
   get toResource() {
     const resource = _.pick(this, ['uuid', 'voided']);
     resource.programUUID = this.program.uuid;
-    resource.enrolmentDateTime = General.isoFormat(this.enrolmentDateTime);
-    resource.programExitDateTime = General.isoFormat(this.programExitDateTime);
+    resource.enrolmentDateTime = moment(this.enrolmentDateTime).format();
+    if (!_.isNil(this.programExitDateTime)) {
+      resource.programExitDateTime = moment(this.programExitDateTime).format();
+    }
     resource.individualUUID = this.individual.uuid;
     resource.observations = [];
     this.observations.forEach(obs => {
       resource.observations.push(obs.toResource);
+    });
+    resource.programExitObservations = [];
+    this.programExitObservations.forEach(obs => {
+      resource.programExitObservations.push(obs.toResource);
     });
     return resource;
   }
@@ -56,7 +64,7 @@ class ProgramEnrolment extends Realm.Object {
       ProgramEnrolment.createEmptyInstance(),
       ['uuid', 'voided'],
       ['enrolmentDateTime', 'programExitDateTime'],
-      ['observations'],
+      ['observations', 'programExitObservations'],
       entityService,
     );
     programEnrolment.program = program;
@@ -95,6 +103,7 @@ ProgramEnrolment.schema = {
     program: 'Program',
     enrolmentDateTime: 'date',
     observations: {type: 'list', objectType: 'Observation'},
+    programExitObservations: {type: 'list', objectType: 'Observation'},
     programExitDateTime: {type: 'date', optional: true},
     individual: 'Individual',
     voided: {type: 'bool', default: false},
