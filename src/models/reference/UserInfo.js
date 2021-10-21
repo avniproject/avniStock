@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Realm from 'realm';
+import General from '../../utility/General';
 
 class UserInfo extends Realm.Object {
   static UUID = 'ce9ad8ee-193e-49ee-8626-49802c8b4bd7';
@@ -14,6 +15,7 @@ class UserInfo extends Realm.Object {
         ? UserInfo.DEFAULT_SETTINGS
         : JSON.stringify(resource.settings),
       name: resource.name,
+      catchmentName: resource.catchmentName,
     };
   }
 
@@ -41,7 +43,12 @@ class UserInfo extends Realm.Object {
   }
 
   static createEmptyInstance() {
-    const userInfo = new UserInfo();
+    const userInfo = {
+      username: '',
+      uuid: General.randomUUID(),
+      organisationName: '',
+      catchmentName: '',
+    };
     userInfo.settings = UserInfo.DEFAULT_SETTINGS;
     return userInfo;
   }
@@ -56,6 +63,7 @@ UserInfo.schema = {
     organisationName: 'string',
     settings: 'string',
     name: {type: 'string', optional: true},
+    catchmentName: {type: 'string', optional: true},
   },
 };
 export default UserInfo;

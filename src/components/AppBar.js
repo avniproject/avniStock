@@ -4,6 +4,7 @@ import Colors from '../styles/Colors';
 import Sync from './Sync';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchBar from './SearchBar';
+import SideDrawer from './SideDrawer';
 
 export default function AppBar({
   title = '',
@@ -13,29 +14,43 @@ export default function AppBar({
   productName,
   setProductName,
 }) {
+  const [displayDrawer, setDisplayDrawer] = React.useState(false);
   return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        {showBackButton && (
-          <MaterialCommunityIcons
-            name={'arrow-left'}
-            style={styles.icon}
-            onPress={() =>
-              navigation.canGoBack()
-                ? navigation.goBack()
-                : navigation.navigate('Product List')
-            }
-          />
-        )}
-        <Text style={styles.header}>{title}</Text>
+    <React.Fragment>
+      <View style={styles.container}>
+        <View style={styles.leftContainer}>
+          {showBackButton ? (
+            <MaterialCommunityIcons
+              name={'arrow-left'}
+              style={styles.icon}
+              onPress={() =>
+                navigation.canGoBack()
+                  ? navigation.goBack()
+                  : navigation.navigate('Product List')
+              }
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name={'menu'}
+              style={styles.icon}
+              onPress={() => setDisplayDrawer(p => !p)}
+            />
+          )}
+          <Text style={styles.header}>{title}</Text>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <SearchBar value={productName} onchange={setProductName} />
+          {!showBackButton && (
+            <Sync navigation={navigation} loginSync={loginSync} />
+          )}
+        </View>
       </View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <SearchBar value={productName} onchange={setProductName} />
-        {!showBackButton && (
-          <Sync navigation={navigation} loginSync={loginSync} />
-        )}
-      </View>
-    </View>
+      <SideDrawer
+        navigation={navigation}
+        show={displayDrawer}
+        setShow={setDisplayDrawer}
+      />
+    </React.Fragment>
   );
 }
 
