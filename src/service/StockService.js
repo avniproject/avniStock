@@ -27,7 +27,9 @@ class StockService extends BaseService {
   }
 
   getStocksByProductUUID(productUUID) {
-    return this.getAllNonVoided().filtered('individual.uuid = $0', productUUID);
+    return this.getAllNonVoided()
+      .filtered('individual.uuid = $0', productUUID)
+      .sorted('enrolmentDateTime', true);
   }
 
   saveOrUpdate(stockState) {

@@ -28,6 +28,7 @@ export default function RemovedStockLogTable({productUUID, navigation}) {
   const renderEachRow = () => {
     return _.map(removedStockList, rs => (
       <StockLogRow
+        key={rs.uuid}
         uuid={rs.uuid}
         quantity={rs.quantity}
         date={rs.encounterDateTime}

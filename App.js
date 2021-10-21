@@ -14,7 +14,8 @@ import EntitySyncStatusService from './src/service/EntitySyncStatusService';
 import EntityMetaData from './src/models/framework/EntityMetaData';
 import {LogBox} from 'react-native';
 
-LogBox.ignoreAllLogs();
+// In models there is many cyclic uses of classes. Ignoring those logs for now
+LogBox.ignoreLogs(['Require cycle:']);
 let beans, db;
 const theme = {
   ...DefaultTheme,

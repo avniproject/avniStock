@@ -26,6 +26,7 @@ export default function AddedStockLogTable({productUUID, navigation}) {
   const renderEachRow = () => {
     return _.map(stocks, stock => (
       <StockLogRow
+        key={stock.uuid}
         uuid={stock.uuid}
         quantity={stock.quantity}
         date={stock.enrolmentDateTime}

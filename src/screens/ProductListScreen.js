@@ -8,13 +8,15 @@ import ProductService from '../service/ProductService';
 const ProductListScreen = ({navigation, route}) => {
   const [products, setProducts] = useState([]);
   const loginSync = route.params && route.params.loginSync;
+  const [productName, setProductName] = useState();
 
   useFocusEffect(
     useCallback(() => {
-      const products = getService(ProductService).getSortedProductList();
+      const products =
+        getService(ProductService).getSortedProductList(productName);
       setProducts(products);
       return () => {};
-    }, []),
+    }, [productName]),
   );
 
   return (
@@ -23,6 +25,8 @@ const ProductListScreen = ({navigation, route}) => {
         title={'Product List'}
         navigation={navigation}
         loginSync={loginSync}
+        productName={productName}
+        setProductName={setProductName}
       />
       <ProductList navigation={navigation} products={products} />
     </Fragment>

@@ -3,12 +3,15 @@ import React from 'react';
 import Colors from '../styles/Colors';
 import Sync from './Sync';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SearchBar from './SearchBar';
 
 export default function AppBar({
   title = '',
   navigation,
   showBackButton,
   loginSync = false,
+  productName,
+  setProductName,
 }) {
   return (
     <View style={styles.container}>
@@ -26,7 +29,8 @@ export default function AppBar({
         )}
         <Text style={styles.header}>{title}</Text>
       </View>
-      <View>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <SearchBar value={productName} onchange={setProductName} />
         {!showBackButton && (
           <Sync navigation={navigation} loginSync={loginSync} />
         )}

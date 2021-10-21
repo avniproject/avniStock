@@ -4,6 +4,7 @@ import Individual from '../models/transactional/Individual';
 import ObservationsHolder from '../models/observation/ObservationsHolder';
 import EntityQueue from '../models/framework/EntityQueue';
 import Realm from 'realm';
+import _ from 'lodash';
 
 @Service('productService')
 class ProductService extends BaseService {
@@ -15,8 +16,14 @@ class ProductService extends BaseService {
     return Individual.schema.name;
   }
 
-  getSortedProductList() {
-    return this.getAllNonVoided().sorted('name');
+  getSortedProductList(productName) {
+    return this.getAllNonVoided()
+      .filtered(
+        _.isEmpty(productName)
+          ? 'name <> null'
+          : `name LIKE[c] "${productName}*"`,
+      )
+      .sorted('name');
   }
 
   updateProduct(editProductState) {

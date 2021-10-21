@@ -19,10 +19,9 @@ class RemoveStockService extends BaseService {
   }
 
   getRemovedListForProductUUID(productUUID) {
-    return this.getAllNonVoided().filtered(
-      'programEnrolment.individual.uuid = $0',
-      productUUID,
-    );
+    return this.getAllNonVoided()
+      .filtered('programEnrolment.individual.uuid = $0', productUUID)
+      .sorted('encounterDateTime', true);
   }
 
   saveOrUpdate(removeStockState) {
