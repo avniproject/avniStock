@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 class ValidationResult {
   constructor(success, formIdentifier, messageKey, extra) {
     this.success = success;
@@ -13,18 +11,22 @@ class ValidationResult {
   }
 
   static failureForEmpty(formIdentifier) {
+    return new ValidationResult(false, formIdentifier, "Field can't be empty.");
+  }
+
+  static failureForUnique(formIdentifier) {
     return new ValidationResult(
       false,
       formIdentifier,
-      'emptyValidationMessage',
+      'This field must be unique.',
     );
   }
 
-  static failureForNumeric(formIdentifier) {
+  static failureForFutureDate(formIdentifier) {
     return new ValidationResult(
       false,
       formIdentifier,
-      'numericValueValidation',
+      "Date can't be in future.",
     );
   }
 
@@ -39,19 +41,6 @@ class ValidationResult {
       validationResult.formIdentifier,
       validationResult.messageKey,
       validationResult.extra,
-    );
-  }
-
-  static findByFormIdentifier(validationResults, formIdentifier) {
-    return _.find(
-      validationResults,
-      validationResult => validationResult.formIdentifier === formIdentifier,
-    );
-  }
-
-  static hasValidationError(validationResults) {
-    return validationResults.some(
-      validationResult => !validationResult.success,
     );
   }
 }

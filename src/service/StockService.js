@@ -8,6 +8,7 @@ import Realm from 'realm';
 import EntityQueue from '../models/framework/EntityQueue';
 import _ from 'lodash';
 import ProductService from './ProductService';
+import Concept from '../models/reference/Concept';
 
 @Service('stockService')
 class StockService extends BaseService {
@@ -19,17 +20,38 @@ class StockService extends BaseService {
     return ProgramEnrolment.schema.name;
   }
 
-  getBatchDetails() {
-    return _.map(this.getAllNonVoided(), enl => ({
-      uuid: enl.uuid,
-      batchNumber: enl.batchNumber,
-    }));
+  getBatchDetailsForProduct(productUUID) {
+    return _.map(
+      this.getAllNonVoided().filtered('individual.uuid = $0', productUUID),
+      enl => ({
+        uuid: enl.uuid,
+        batchNumber: enl.batchNumber,
+      }),
+    );
   }
 
   getStocksByProductUUID(productUUID) {
     return this.getAllNonVoided()
       .filtered('individual.uuid = $0', productUUID)
       .sorted('enrolmentDateTime', true);
+  }
+
+  getTotalRemainingInBatch(stockUUID) {
+    const programEnrolment = this.findByUUID(stockUUID);
+    return _.isNil(programEnrolment) ? 0 : programEnrolment.totalRemaining;
+  }
+
+  isBatchNumberAlreadyUsed(batchNumber, productUUID) {
+    const concept = this.getService(EntityService).findByName(
+      ProgramEnrolment.conceptNames.batchNumber,
+      Concept.schema.name,
+    );
+    const obsQuery = `SUBQUERY(observations, $observation, $observation.concept.uuid = "${concept.uuid}" and $observation.valueJSON contains '"value":"${batchNumber}"' ).@count > 0`;
+    return (
+      this.getAllNonVoided()
+        .filtered('individual.uuid = $0', productUUID)
+        .filtered(obsQuery).length > 0
+    );
   }
 
   saveOrUpdate(stockState) {

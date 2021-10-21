@@ -1,23 +1,32 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {getService} from '../hooks/getService';
 import Colors from '../styles/Colors';
 import _ from 'lodash';
 import {StyleSheet, Text, View} from 'react-native';
 import StockService from '../service/StockService';
+import ErrorText from './ErrorText';
+import {useFocusEffect} from '@react-navigation/core';
 
 export default function BatchNumberDropdown({
+  productUUID,
   productBatchUUID = null,
   setProductBatchUUID = _.noop,
+  errorText,
 }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    const productBatches = getService(StockService).getBatchDetails();
-    setItems(productBatches);
-  }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      const productBatches =
+        getService(StockService).getBatchDetailsForProduct(productUUID);
+      setItems(productBatches);
+      return () => {
+        setOpen(false);
+      };
+    }, [productUUID]),
+  );
   const productSchema = {
     label: 'batchNumber',
     value: 'uuid',
@@ -37,7 +46,14 @@ export default function BatchNumberDropdown({
         searchable={true}
         placeholder={'Select Batch'}
         style={styles.container}
+        listMode="SCROLLVIEW"
+        listItemContainerStyle={{borderColor: Colors.border}}
+        dropDownContainerStyle={{borderColor: Colors.border}}
+        searchContainerStyle={{borderBottomColor: Colors.border}}
+        searchPlaceholder={'Search Batch...'}
+        zIndex={100}
       />
+      <ErrorText errorText={errorText} />
     </View>
   );
 }

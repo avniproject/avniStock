@@ -2,12 +2,22 @@ import ProgramEnrolment from '../models/transactional/ProgramEnrolment';
 import ObservationsHolder from '../models/observation/ObservationsHolder';
 import {getService} from '../hooks/getService';
 import StockService from '../service/StockService';
+import CommonState from './CommonState';
+import moment from 'moment';
+import ValidationResult from '../models/framework/ValidationResult';
+import _ from 'lodash';
 
-class StockState {
+class StockState extends CommonState {
   constructor() {
-    this.stock = ProgramEnrolment.createEmptyInstance();
-    this.observationHolder = new ObservationsHolder(this.stock.observations);
+    const stock = ProgramEnrolment.createEmptyInstance();
+    super(stock.observations);
+    this.stock = stock;
   }
+
+  static staticIds = {
+    enrolmentDate: 'Enrolment_Date',
+    product: 'Product',
+  };
 
   static onLoad(newStockUUID) {
     if (newStockUUID) {
@@ -34,7 +44,7 @@ class StockState {
   clone() {
     const newState = new StockState();
     StockState.cloneStock(this.stock, newState.stock);
-    newState.observationHolder = this.observationHolder;
+    super.clone(newState);
     return newState;
   }
 
@@ -56,8 +66,74 @@ class StockState {
     );
   }
 
-  get observations() {
-    return this.observationHolder.observations;
+  validateDate() {
+    const id = StockState.staticIds.enrolmentDate;
+    const date = this.stock.enrolmentDateTime;
+    if (moment(date).isAfter(moment(), 'day')) {
+      this.handleValidationResult(ValidationResult.failureForFutureDate(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateProduct() {
+    const id = StockState.staticIds.product;
+    if (_.isEmpty(this.stock.individual.subjectType.name)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateQuantity() {
+    const id = ProgramEnrolment.conceptNames.quantity;
+    if (_.isEmpty(_.toString(this.quantity))) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateBatchNumber() {
+    const id = ProgramEnrolment.conceptNames.batchNumber;
+    if (_.isEmpty(this.batchNumber)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else if (
+      getService(StockService).isBatchNumberAlreadyUsed(
+        this.batchNumber,
+        this.stock.individual.uuid,
+      )
+    ) {
+      this.handleValidationResult(
+        ValidationResult.failure(
+          id,
+          'Same batch number cannot be used twice for the same product.',
+        ),
+      );
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateExpiryDate() {
+    const id = ProgramEnrolment.conceptNames.expiryDate;
+    if (_.isNil(this.expiryDate)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else if (moment(this.expiryDate).isSameOrBefore(moment(), 'day')) {
+      this.handleValidationResult(
+        ValidationResult.failure(id, 'Adding expired products not allowed.'),
+      );
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validate() {
+    this.validateDate();
+    this.validateProduct();
+    this.validateQuantity();
+    this.validateBatchNumber();
+    this.validateExpiryDate();
   }
 }
 

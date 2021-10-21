@@ -2,12 +2,24 @@ import ObservationsHolder from '../models/observation/ObservationsHolder';
 import {getService} from '../hooks/getService';
 import ProgramEncounter from '../models/transactional/ProgramEncounter';
 import RemoveStockService from '../service/RemoveStockService';
+import CommonState from './CommonState';
+import moment from 'moment';
+import ValidationResult from '../models/framework/ValidationResult';
+import _ from 'lodash';
+import StockService from '../service/StockService';
 
-class RemoveStockState {
+class RemoveStockState extends CommonState {
   constructor() {
-    this.stock = ProgramEncounter.createEmptyInstance();
-    this.observationHolder = new ObservationsHolder(this.stock.observations);
+    const stock = ProgramEncounter.createEmptyInstance();
+    super(stock.observations);
+    this.stock = stock;
   }
+
+  static staticIds = {
+    encounterDate: 'Encounter_Date',
+    batchNumber: 'Batch_number',
+    product: 'Product',
+  };
 
   static onLoad(existingUUID) {
     if (existingUUID) {
@@ -35,7 +47,7 @@ class RemoveStockState {
   clone() {
     const newState = new RemoveStockState();
     RemoveStockState.cloneStock(this.stock, newState.stock);
-    newState.observationHolder = this.observationHolder;
+    super.clone(newState);
     return newState;
   }
 
@@ -45,8 +57,58 @@ class RemoveStockState {
     );
   }
 
-  get observations() {
-    return this.observationHolder.observations;
+  validateDate() {
+    const id = RemoveStockState.staticIds.encounterDate;
+    const date = this.stock.encounterDateTime;
+    if (moment(date).isAfter(moment(), 'day')) {
+      this.handleValidationResult(ValidationResult.failureForFutureDate(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateBatchNumber() {
+    const id = RemoveStockState.staticIds.batchNumber;
+    if (_.isEmpty(this.stock.programEnrolment.program.name)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateProduct() {
+    const id = RemoveStockState.staticIds.product;
+    if (_.isEmpty(this.stock.programEnrolment.individual.subjectType.name)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateQuantity() {
+    const id = ProgramEncounter.conceptNames.quantity;
+    const totalRemainingInBatch = getService(
+      StockService,
+    ).getTotalRemainingInBatch(this.stock.programEnrolment.uuid);
+    if (_.isEmpty(_.toString(this.quantity))) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else if (this.quantity > totalRemainingInBatch) {
+      this.handleValidationResult(
+        ValidationResult.failure(
+          id,
+          `This cannot be greater than ${totalRemainingInBatch}, total remaining in this batch.`,
+        ),
+      );
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validate() {
+    this.validateDate();
+    this.validateBatchNumber();
+    this.validateProduct();
+    this.validateQuantity();
   }
 }
 

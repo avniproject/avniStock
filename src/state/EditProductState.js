@@ -1,11 +1,14 @@
 import ObservationsHolder from '../models/observation/ObservationsHolder';
 import Individual from '../models/transactional/Individual';
 import _ from 'lodash';
+import CommonState from './CommonState';
+import ValidationResult from '../models/framework/ValidationResult';
 
-class EditProductState {
+class EditProductState extends CommonState {
   constructor() {
-    this.product = Individual.createEmptyInstance();
-    this.observationHolder = new ObservationsHolder(this.product.observations);
+    const product = Individual.createEmptyInstance();
+    super(product.observations);
+    this.product = product;
   }
 
   static onLoad(product) {
@@ -21,7 +24,7 @@ class EditProductState {
   clone() {
     const newState = new EditProductState();
     newState.product = _.clone(this.product);
-    newState.observationHolder = this.observationHolder;
+    super.clone(newState);
     return newState;
   }
 
@@ -43,8 +46,27 @@ class EditProductState {
     );
   }
 
-  get observations() {
-    return this.observationHolder.observations;
+  validateInitialStock() {
+    const id = Individual.conceptNames.initialStock;
+    if (_.isEmpty(_.toString(this.initialStock))) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateRestockLevel() {
+    const id = Individual.conceptNames.restockLevel;
+    if (_.isEmpty(_.toString(this.restockLevel))) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validate() {
+    this.validateInitialStock();
+    this.validateRestockLevel();
   }
 }
 

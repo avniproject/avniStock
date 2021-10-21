@@ -10,8 +10,9 @@ import {
 import Colors from '../styles/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import General from '../utility/General';
+import ErrorText from './ErrorText';
 
-export default function DateInput({date, onDateChange, label}) {
+export default function DateInput({date, onDateChange, label, errorText}) {
   const [showPicker, setShowPicker] = useState(false);
 
   const onChange = (event, value) => {
@@ -44,6 +45,7 @@ export default function DateInput({date, onDateChange, label}) {
           />
         ) : null;
       }, [showPicker])}
+      <ErrorText errorText={errorText} />
     </View>
   );
 }

@@ -6,13 +6,14 @@ const EditRemovedStockScreen = ({navigation, route}) => {
   return (
     <Fragment>
       <AppBar
-        title={'Remove stock'}
+        title={'Edit removed stock'}
         navigation={navigation}
         showBackButton={true}
       />
       <RemoveStock
         navigation={navigation}
         productRemovalUUID={route.params.productRemovalUUID}
+        disableProductDropdown={true}
       />
     </Fragment>
   );

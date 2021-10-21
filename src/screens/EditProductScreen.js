@@ -23,8 +23,8 @@ const EditProductScreen = ({navigation, route}) => {
   };
 
   const onSave = () => {
-    dispatch({type: editProductActions.ON_SAVE});
-    navigation.goBack();
+    const afterSaveCB = () => navigation.goBack();
+    dispatch({type: editProductActions.ON_SAVE, afterSaveCB});
   };
 
   return (
@@ -50,6 +50,9 @@ const EditProductScreen = ({navigation, route}) => {
             })
           }
           keyboardType="numeric"
+          errorText={state.getErrorMessage(
+            Individual.conceptNames.initialStock,
+          )}
         />
         <TextInput
           label="Restock Level"
@@ -64,6 +67,9 @@ const EditProductScreen = ({navigation, route}) => {
             })
           }
           keyboardType="numeric"
+          errorText={state.getErrorMessage(
+            Individual.conceptNames.restockLevel,
+          )}
         />
         <TextInput
           label="Current Stock"
