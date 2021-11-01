@@ -33,49 +33,6 @@ class EntitySyncStatusService extends BaseService {
       .slice()[0];
   }
 
-  getAllByEntityName(entityName, entityTypeUuid) {
-    return this.db
-      .objects(EntitySyncStatus.schema.name)
-      .filtered('entityName = $0', entityName)
-      .filtered(
-        _.isEmpty(entityTypeUuid) ? 'uuid<>null' : 'entityTypeUuid = $0',
-        entityTypeUuid,
-      );
-  }
-
-  findAllByUniqueEntityName() {
-    return this.findAll().filtered('TRUEPREDICATE DISTINCT(entityName)');
-  }
-
-  geAllSyncStatus() {
-    const entityQueueService = this.getService(EntityQueueService);
-    return _.map(
-      this.findAllByUniqueEntityName(),
-      ({entityName, loadedSince}) => {
-        const isNeverSynced =
-          loadedSince.getTime() === EntitySyncStatus.REALLY_OLD_DATE.getTime();
-        return {
-          entityName: entityName,
-          loadedSince: isNeverSynced
-            ? 'Never'
-            : moment(loadedSince).format('DD-MM-YYYY HH:MM:SS'),
-          queuedCount: entityQueueService.getQueuedItemCount(entityName),
-          type: EntityMetaData.findByName(entityName).type,
-        };
-      },
-    );
-  }
-
-  getLastLoaded() {
-    return moment(
-      _.max(
-        this.findAll(EntitySyncStatus.schema.name).map(
-          entitySyncStatus => entitySyncStatus.loadedSince,
-        ),
-      ),
-    ).format('DD-MM-YYYY HH:MM:SS');
-  }
-
   setup(entityMetaDataModel) {
     const self = this;
 
@@ -105,14 +62,6 @@ class EntitySyncStatusService extends BaseService {
         }
       }
     });
-  }
-
-  getTotalEntitiesPending() {
-    return _.sum(
-      this.geAllSyncStatus()
-        .filter(s => s.entityName !== 'SyncTelemetry')
-        .map(s => s.queuedCount),
-    );
   }
 
   updateAsPerSyncDetails(entitySyncStatuses) {

@@ -7,7 +7,6 @@ import _ from 'lodash';
 import SyncService from '../service/SyncService';
 import EntityMetaData from '../models/framework/EntityMetaData';
 import SyncError from '../service/error/SyncError';
-import EntitySyncStatusService from '../service/EntitySyncStatusService';
 import React, {useCallback} from 'react';
 import SyncProgressBar from './SyncProgressBar';
 import {syncActions} from '../reducers/SyncReducer';
@@ -17,6 +16,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Badge from './Badge';
 import Colors from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/core';
+import EntityQueueService from '../service/EntityQueueService';
 
 export default function Sync({navigation, loginSync}) {
   const dispatch = useDispatch();
@@ -26,9 +26,7 @@ export default function Sync({navigation, loginSync}) {
 
   useFocusEffect(
     useCallback(() => {
-      setSyncCount(
-        getService(EntitySyncStatusService).getTotalEntitiesPending(),
-      );
+      setSyncCount(getService(EntityQueueService).getTotalQueueCount());
       return () => {};
     }, []),
   );
