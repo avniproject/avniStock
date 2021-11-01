@@ -67,7 +67,10 @@ export default function Sync({navigation, loginSync}) {
       error instanceof AuthenticationError &&
       error.authErrCode !== 'NetworkingError'
     ) {
-      //TODO: navigate to login view
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'LoginScreen'}],
+      });
     } else if (!netInfo.isConnected) {
       errorAlert('Internet connection error');
     } else if (isServerError) {

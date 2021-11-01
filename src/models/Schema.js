@@ -28,5 +28,4 @@ export default {
     ProgramEncounter,
   ],
   schemaVersion: 1,
-  deleteRealmIfMigrationNeeded: true,
 };
