@@ -108,17 +108,16 @@ class SyncService extends BaseService {
       )
       .then(() => onAfterMediaPush('After_Media', 0))
       .then(() => statusMessageCallBack('Fetching changed resources'))
-      .then(() =>
-        post(
-          `${serverURL}/syncDetails?isStockApp=${true}`,
-          entitySyncStatus,
-          true,
-        ),
-      )
+      .then(() => post(`${serverURL}/syncDetails`, entitySyncStatus, true))
       .then(res => res.json());
 
+    const filteredSyncDetails = _.intersectionBy(
+      syncDetails,
+      allEntitiesMetaData,
+      'entityName',
+    );
     const filteredMetadata = _.filter(allEntitiesMetaData, ({entityName}) =>
-      _.find(syncDetails, sd => sd.entityName === entityName),
+      _.find(filteredSyncDetails, sd => sd.entityName === entityName),
     );
     const filteredRefData = this.getMetadataByType(
       filteredMetadata,
@@ -127,12 +126,12 @@ class SyncService extends BaseService {
     const filteredTxData = this.getMetadataByType(filteredMetadata, 'tx');
     General.logDebug(
       'SyncService',
-      `Entities to sync ${_.map(syncDetails, ({entityName, entityTypeUuid}) => [
-        entityName,
-        entityTypeUuid,
-      ])}`,
+      `Entities to sync ${_.map(
+        filteredSyncDetails,
+        ({entityName, entityTypeUuid}) => [entityName, entityTypeUuid],
+      )}`,
     );
-    this.entitySyncStatusService.updateAsPerSyncDetails(syncDetails);
+    this.entitySyncStatusService.updateAsPerSyncDetails(filteredSyncDetails);
 
     return Promise.resolve(statusMessageCallBack('Downloading forms'))
       .then(() => this.getRefData(filteredRefData, onProgressPerEntity, now))
@@ -142,7 +141,7 @@ class SyncService extends BaseService {
         this.getTxData(
           filteredTxData,
           onProgressPerEntity,
-          syncDetails,
+          filteredSyncDetails,
           nowMinus10Seconds,
         ),
       );
