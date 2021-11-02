@@ -13,6 +13,7 @@ class EditProductState extends CommonState {
 
   static onLoad(product) {
     const state = new EditProductState();
+    state.editFlow = true;
     state.product.uuid = product.uuid;
     state.product.name = product.name;
     state.product.totalAdded = product.getTotalAdded();

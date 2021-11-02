@@ -23,6 +23,7 @@ class StockState extends CommonState {
     if (newStockUUID) {
       const existingStock = getService(StockService).findByUUID(newStockUUID);
       const newState = new StockState();
+      newState.editFlow = true;
       StockState.cloneStock(existingStock, newState.stock);
       newState.observationHolder = new ObservationsHolder(
         existingStock.observations,
@@ -99,9 +100,10 @@ class StockState extends CommonState {
     if (_.isEmpty(this.batchNumber)) {
       this.handleValidationResult(ValidationResult.failureForEmpty(id));
     } else if (
-      getService(StockService).isBatchNumberAlreadyUsed(
+      getService(StockService).isBatchNumberAlreadyUsedForProductExcept(
         this.batchNumber,
         this.stock.individual.uuid,
+        this.stock.uuid,
       )
     ) {
       this.handleValidationResult(

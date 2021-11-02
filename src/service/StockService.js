@@ -36,12 +36,18 @@ class StockService extends BaseService {
       .sorted('enrolmentDateTime', true);
   }
 
-  getTotalRemainingInBatch(stockUUID) {
+  getTotalRemainingInBatchExcept(stockUUID, removedStockUUID) {
     const programEnrolment = this.findByUUID(stockUUID);
-    return _.isNil(programEnrolment) ? 0 : programEnrolment.totalRemaining;
+    return _.isNil(programEnrolment)
+      ? 0
+      : programEnrolment.getTotalRemainingExcept(removedStockUUID);
   }
 
-  isBatchNumberAlreadyUsed(batchNumber, productUUID) {
+  isBatchNumberAlreadyUsedForProductExcept(
+    batchNumber,
+    productUUID,
+    stockUUID,
+  ) {
     const concept = this.getService(EntityService).findByName(
       ProgramEnrolment.conceptNames.batchNumber,
       Concept.schema.name,
@@ -50,6 +56,7 @@ class StockService extends BaseService {
     return (
       this.getAllNonVoided()
         .filtered('individual.uuid = $0', productUUID)
+        .filtered('uuid <> $0', stockUUID)
         .filtered(obsQuery).length > 0
     );
   }

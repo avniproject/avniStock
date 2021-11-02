@@ -54,6 +54,7 @@ export default function Stock({navigation, productUUID}) {
               dispatch({type: stockActions.ON_PRODUCT_CHANGE, productUUID})
             }
             errorText={state.getErrorMessage(StockState.staticIds.product)}
+            disabled={state.editFlow}
           />
           <TextInput
             label="Quantity"

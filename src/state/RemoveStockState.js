@@ -26,6 +26,7 @@ class RemoveStockState extends CommonState {
       const existingStock =
         getService(RemoveStockService).findByUUID(existingUUID);
       const newState = new RemoveStockState();
+      newState.editFlow = true;
       RemoveStockState.cloneStock(existingStock, newState.stock);
       newState.observationHolder = new ObservationsHolder(
         existingStock.observations,
@@ -89,7 +90,10 @@ class RemoveStockState extends CommonState {
     const id = ProgramEncounter.conceptNames.quantity;
     const totalRemainingInBatch = getService(
       StockService,
-    ).getTotalRemainingInBatch(this.stock.programEnrolment.uuid);
+    ).getTotalRemainingInBatchExcept(
+      this.stock.programEnrolment.uuid,
+      this.stock.uuid,
+    );
     if (_.isEmpty(_.toString(this.quantity))) {
       this.handleValidationResult(ValidationResult.failureForEmpty(id));
     } else if (this.quantity > totalRemainingInBatch) {

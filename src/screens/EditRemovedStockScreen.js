@@ -13,7 +13,6 @@ const EditRemovedStockScreen = ({navigation, route}) => {
       <RemoveStock
         navigation={navigation}
         productRemovalUUID={route.params.productRemovalUUID}
-        disableProductDropdown={true}
       />
     </Fragment>
   );

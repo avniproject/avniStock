@@ -47,12 +47,13 @@ export default function ProductDropdown({
         placeholder={'Select Product'}
         style={styles.container}
         listMode="SCROLLVIEW"
-        disabled={disabled}
         listItemContainerStyle={{borderColor: Colors.border}}
         dropDownContainerStyle={{borderColor: Colors.border}}
         searchContainerStyle={{borderBottomColor: Colors.border}}
         searchPlaceholder={'Search Product...'}
         zIndex={200}
+        disabled={disabled}
+        showArrowIcon={!disabled}
       />
       <ErrorText errorText={errorText} />
     </View>

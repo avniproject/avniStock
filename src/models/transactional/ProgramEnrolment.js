@@ -136,12 +136,20 @@ class ProgramEnrolment extends Realm.Object {
     }
   }
 
-  getTotalRemovedItems() {
-    return _.sum(_.map(this.encounters, enc => enc.quantity));
+  getRemovedStocks(removedStockUUID) {
+    return _.isEmpty(removedStockUUID)
+      ? this.encounters
+      : _.filter(this.encounters, ({uuid}) => uuid !== removedStockUUID);
   }
 
-  get totalRemaining() {
-    return this.quantity - this.getTotalRemovedItems();
+  getTotalRemovedItems(removedStockUUID) {
+    return _.sum(
+      _.map(this.getRemovedStocks(removedStockUUID), enc => enc.quantity),
+    );
+  }
+
+  getTotalRemainingExcept(removedStockUUID) {
+    return this.quantity - this.getTotalRemovedItems(removedStockUUID);
   }
 }
 

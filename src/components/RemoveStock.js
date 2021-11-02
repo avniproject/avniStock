@@ -13,11 +13,7 @@ import RemoveStockState from '../state/RemoveStockState';
 import Colors from '../styles/Colors';
 import ProductDropdown from './ProductDropdown';
 
-export default function RemoveStock({
-  navigation,
-  productRemovalUUID,
-  disableProductDropdown,
-}) {
+export default function RemoveStock({navigation, productRemovalUUID}) {
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.removeStock);
   const stock = state.stock;
@@ -55,7 +51,7 @@ export default function RemoveStock({
           dispatch({type: removeStockActions.ON_PRODUCT_CHANGE, productUUID})
         }
         errorText={state.getErrorMessage(RemoveStockState.staticIds.product)}
-        disabled={disableProductDropdown}
+        disabled={state.editFlow}
       />
       <BatchNumberDropdown
         productUUID={stock.programEnrolment.individual.uuid}
@@ -69,6 +65,7 @@ export default function RemoveStock({
         errorText={state.getErrorMessage(
           RemoveStockState.staticIds.batchNumber,
         )}
+        disabled={state.editFlow}
       />
       <TextInput
         label="Quantity"

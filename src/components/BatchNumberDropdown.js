@@ -13,6 +13,7 @@ export default function BatchNumberDropdown({
   productBatchUUID = null,
   setProductBatchUUID = _.noop,
   errorText,
+  disabled,
 }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
@@ -52,6 +53,8 @@ export default function BatchNumberDropdown({
         searchContainerStyle={{borderBottomColor: Colors.border}}
         searchPlaceholder={'Search Batch...'}
         zIndex={100}
+        disabled={disabled}
+        showArrowIcon={!disabled}
       />
       <ErrorText errorText={errorText} />
     </View>

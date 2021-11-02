@@ -6,6 +6,7 @@ class CommonState {
   constructor(observations) {
     this.observationHolder = new ObservationsHolder(observations);
     this.validationResults = [];
+    this.editFlow = false;
   }
 
   get observations() {
@@ -36,6 +37,7 @@ class CommonState {
       newState.validationResults.push(ValidationResult.clone(validationResult));
     });
     newState.observationHolder = this.observationHolder;
+    newState.editFlow = this.editFlow;
     return newState;
   }
 
