@@ -8,6 +8,7 @@ import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import EditProductScreen from '../screens/EditProductScreen';
 import EditStockScreen from '../screens/EditStockScreen';
 import EditRemovedStockScreen from '../screens/EditRemovedStockScreen';
+import ChangeLanguageScreen from '../screens/ChangeLanguageScreen';
 
 export default function Navigator({userExists}) {
   const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ export default function Navigator({userExists}) {
         name="Edit Removed Stock"
         component={EditRemovedStockScreen}
       />
+      <Stack.Screen name="Change Language" component={ChangeLanguageScreen} />
     </Stack.Navigator>
   );
 }

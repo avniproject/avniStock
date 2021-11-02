@@ -19,7 +19,7 @@ export default function SideDrawer({show, navigation, setShow}) {
       propagateSwipe
       style={styles.sideMenuStyle}
     >
-      <SideMenu navigation={navigation} />
+      <SideMenu navigation={navigation} hideDrawer={hideModal} />
     </Modal>
   );
 }

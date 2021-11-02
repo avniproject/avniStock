@@ -39,7 +39,9 @@ export default function AppBar({
           <Text style={styles.header}>{title}</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <SearchBar value={productName} onchange={setProductName} />
+          {!showBackButton && (
+            <SearchBar value={productName} onchange={setProductName} />
+          )}
           {!showBackButton && (
             <Sync navigation={navigation} loginSync={loginSync} />
           )}

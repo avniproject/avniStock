@@ -2,6 +2,7 @@ import Service from '../framework/bean/Service';
 import BaseService from './BaseService';
 import _ from 'lodash';
 import EntityQueue from '../models/framework/EntityQueue';
+import Realm from 'realm';
 
 @Service('entityService')
 class EntityService extends BaseService {

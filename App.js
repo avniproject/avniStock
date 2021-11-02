@@ -13,6 +13,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import EntitySyncStatusService from './src/service/EntitySyncStatusService';
 import EntityMetaData from './src/models/framework/EntityMetaData';
 import {LogBox} from 'react-native';
+import UserInfoService from './src/service/UserInfoService';
+import {changeLanguage, getCurrentLocale} from './src/service/i18n/messages';
 
 // In models there is many cyclic uses of classes. Ignoring those logs for now
 LogBox.ignoreLogs(['Require cycle:']);
@@ -39,6 +41,8 @@ class App extends React.Component {
       .get(AuthService)
       .userExists()
       .then(exists => this.setState({userExists: exists, loadApp: true}));
+    const currentLocale = beans.get(UserInfoService).getUserSettings().locale;
+    changeLanguage(currentLocale);
   }
 
   render() {

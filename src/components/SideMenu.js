@@ -11,8 +11,10 @@ import {getService} from '../hooks/getService';
 import UserInfoService from '../service/UserInfoService';
 import _ from 'lodash';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function SideMenu({navigation}) {
+export default function SideMenu({navigation, hideDrawer}) {
   const userInfo = getService(UserInfoService).getUserInfo();
   const onLogout = () =>
     navigation.reset({
@@ -25,6 +27,17 @@ export default function SideMenu({navigation}) {
       <Text style={styles.title}>{userInfo.catchmentName || ''}</Text>
       <Separator style={styles.separator} />
       <View style={styles.container}>
+        <TouchableNativeFeedback
+          onPress={() => {
+            hideDrawer();
+            navigation.navigate('Change Language');
+          }}
+        >
+          <View style={styles.listItem}>
+            <Text style={styles.listItemText}>{t('changeLanguage')}</Text>
+            <Icon style={styles.icon} name="arrow-forward" size={25} />
+          </View>
+        </TouchableNativeFeedback>
         <View style={styles.bottomContainer}>
           <Separator style={styles.separator} />
           <View style={styles.useInfoContainer}>
@@ -34,7 +47,7 @@ export default function SideMenu({navigation}) {
           <View style={{alignItems: 'flex-end'}}>
             <TouchableNativeFeedback onPress={onLogout}>
               <View>
-                <Text style={styles.logout}>Logout</Text>
+                <Text style={styles.logout}>{t('logout')}</Text>
               </View>
             </TouchableNativeFeedback>
           </View>
@@ -76,5 +89,20 @@ const styles = StyleSheet.create({
   },
   logout: {
     color: Colors.primary,
+  },
+  listItem: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 10,
+  },
+  listItemText: {
+    marginLeft: 10,
+    fontSize: 18,
+    color: Colors.text,
+    width: '90%',
+  },
+  icon: {
+    color: Colors.border,
+    paddingLeft: 5,
   },
 });
