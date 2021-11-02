@@ -13,6 +13,7 @@ export default function AppBar({
   loginSync = false,
   productName,
   setProductName,
+  displaySearch,
 }) {
   const [displayDrawer, setDisplayDrawer] = React.useState(false);
   return (
@@ -39,7 +40,7 @@ export default function AppBar({
           <Text style={styles.header}>{title}</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {!showBackButton && (
+          {displaySearch && (
             <SearchBar value={productName} onchange={setProductName} />
           )}
           {!showBackButton && (

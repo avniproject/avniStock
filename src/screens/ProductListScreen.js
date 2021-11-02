@@ -28,6 +28,7 @@ const ProductListScreen = ({navigation, route}) => {
         loginSync={loginSync}
         productName={productName}
         setProductName={setProductName}
+        displaySearch
       />
       <ProductList navigation={navigation} products={products} />
     </Fragment>
