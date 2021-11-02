@@ -37,24 +37,6 @@ const EditProductScreen = ({navigation, route}) => {
       <SafeAreaView style={styles.container}>
         <TextInput label="Name" disabled={true} value={state.product.name} />
         <TextInput
-          label="Initial Stock"
-          returnKeyType="next"
-          value={_.toString(state.initialStock)}
-          onChangeText={initialStock =>
-            dispatch({
-              type: editProductActions.ON_PRIMITIVE_OBS_CHANGE,
-              payload: {
-                value: initialStock,
-                conceptName: Individual.conceptNames.initialStock,
-              },
-            })
-          }
-          keyboardType="numeric"
-          errorText={state.getErrorMessage(
-            Individual.conceptNames.initialStock,
-          )}
-        />
-        <TextInput
           label="Restock Level"
           value={_.toString(state.restockLevel)}
           onChangeText={restockLevel =>

@@ -7,14 +7,13 @@ import Separator from './Separator';
 import RemovedStockLogTable from './RemovedStockLogTable';
 
 export default function ProductDetails({product, navigation}) {
-  const {name, unit, initialStock, restockLevel, uuid, totalStock} = product;
+  const {name, unit, restockLevel, uuid, totalStock} = product;
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{paddingBottom: 50}}
     >
       <LabelValue label={'Name'} value={name} />
-      <LabelValue label={'Initial Stock'} value={`${initialStock} ${unit}`} />
       <LabelValue label={'Restock Level'} value={restockLevel} />
       <Separator style={styles.separator} />
       <AddedStockLogTable productUUID={uuid} navigation={navigation} />

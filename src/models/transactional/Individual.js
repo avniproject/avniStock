@@ -11,7 +11,6 @@ class Individual extends Realm.Object {
   static conceptNames = {
     unit: 'Unit',
     restockLevel: 'Restock level',
-    initialStock: 'Initial stock',
   };
 
   static createEmptyInstance() {
@@ -108,12 +107,6 @@ class Individual extends Realm.Object {
     );
   }
 
-  get initialStock() {
-    return this.getObservationReadableValue(
-      Individual.conceptNames.initialStock,
-    );
-  }
-
   getTotalAdded() {
     return _.sum(_.map(this.enrolments, enl => enl.quantity));
   }
@@ -123,7 +116,7 @@ class Individual extends Realm.Object {
   }
 
   get totalStock() {
-    return this.initialStock + this.getTotalAdded() - this.getTotalRemoved();
+    return this.getTotalAdded() - this.getTotalRemoved();
   }
 
   get unit() {

@@ -34,25 +34,8 @@ class EditProductState extends CommonState {
     );
   }
 
-  get initialStock() {
-    return this.observationHolder.getObservationReadableValue(
-      Individual.conceptNames.initialStock,
-    );
-  }
-
   get totalStock() {
-    return (
-      this.initialStock + this.product.totalAdded - this.product.toalRemoved
-    );
-  }
-
-  validateInitialStock() {
-    const id = Individual.conceptNames.initialStock;
-    if (_.isEmpty(_.toString(this.initialStock))) {
-      this.handleValidationResult(ValidationResult.failureForEmpty(id));
-    } else {
-      this.handleValidationResult(ValidationResult.successful(id));
-    }
+    return this.product.totalAdded - this.product.toalRemoved;
   }
 
   validateRestockLevel() {
@@ -65,7 +48,6 @@ class EditProductState extends CommonState {
   }
 
   validate() {
-    this.validateInitialStock();
     this.validateRestockLevel();
   }
 }

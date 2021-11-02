@@ -37,9 +37,7 @@ const editProductReducer = (state = initialState, action) => {
         action,
       );
       const conceptName = action.payload.conceptName;
-      if (conceptName === Individual.conceptNames.initialStock) {
-        newState.validateInitialStock();
-      } else if (conceptName === Individual.conceptNames.restockLevel) {
+      if (conceptName === Individual.conceptNames.restockLevel) {
         newState.validateRestockLevel();
       }
       return newState;
