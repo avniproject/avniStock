@@ -7,6 +7,7 @@ import {View} from 'react-native';
 import BadgeText from './BadgeText';
 import StockLogRow from './StockLogRow';
 import {useFocusEffect} from '@react-navigation/core';
+import StockLohHeader from './StockLogHeader';
 
 export default function AddedStockLogTable({productUUID, navigation}) {
   const [stocks, setStocks] = useState([]);
@@ -29,6 +30,7 @@ export default function AddedStockLogTable({productUUID, navigation}) {
         key={stock.uuid}
         uuid={stock.uuid}
         quantity={stock.quantity}
+        batch={stock.batchNumber}
         date={stock.enrolmentDateTime}
         onEdit={onEditPress}
       />
@@ -39,11 +41,7 @@ export default function AddedStockLogTable({productUUID, navigation}) {
     <View style={{minHeight: 150}}>
       <BadgeText number={stocks.length} text={'Added Stock Logs'} />
       <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Date</DataTable.Title>
-          <DataTable.Title>Quantity</DataTable.Title>
-          <DataTable.Title numeric>Edit Record</DataTable.Title>
-        </DataTable.Header>
+        <StockLohHeader />
         {renderEachRow()}
       </DataTable>
     </View>

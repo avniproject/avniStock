@@ -7,6 +7,7 @@ import BadgeText from './BadgeText';
 import RemoveStockService from '../service/RemoveStockService';
 import StockLogRow from './StockLogRow';
 import {useFocusEffect} from '@react-navigation/core';
+import StockLohHeader from './StockLogHeader';
 
 export default function RemovedStockLogTable({productUUID, navigation}) {
   const [removedStockList, setRemovedStockList] = useState([]);
@@ -31,6 +32,7 @@ export default function RemovedStockLogTable({productUUID, navigation}) {
         key={rs.uuid}
         uuid={rs.uuid}
         quantity={rs.quantity}
+        batch={rs.programEnrolment.batchNumber}
         date={rs.encounterDateTime}
         onEdit={onEditPress}
       />
@@ -41,11 +43,7 @@ export default function RemovedStockLogTable({productUUID, navigation}) {
     <View style={{minHeight: 150}}>
       <BadgeText number={removedStockList.length} text={'Removed Stock Logs'} />
       <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Date</DataTable.Title>
-          <DataTable.Title>Quantity</DataTable.Title>
-          <DataTable.Title numeric>Edit Record</DataTable.Title>
-        </DataTable.Header>
+        <StockLohHeader />
         {renderEachRow()}
       </DataTable>
     </View>

@@ -36,7 +36,10 @@ export default function Stock({navigation, productUUID}) {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.surface}}>
-      <ScrollView contentContainerStyle={{paddingBottom: 50}}>
+      <ScrollView
+        contentContainerStyle={{paddingBottom: 50}}
+        keyboardShouldPersistTaps={'handled'}
+      >
         <Surface style={styles.container}>
           <DateInput
             label={'Date'}

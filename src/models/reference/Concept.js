@@ -54,6 +54,10 @@ class Concept extends Realm.Object {
     return this.datatype === Concept.dataType.Coded;
   }
 
+  isDateConcept() {
+    return this.datatype === Concept.dataType.Date;
+  }
+
   getValueWrapperFor(obsValue) {
     if (this.isCodedConcept()) {
       return new SingleCodedValue(obsValue);
