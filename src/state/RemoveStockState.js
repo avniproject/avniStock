@@ -62,7 +62,9 @@ class RemoveStockState extends CommonState {
   validateDate() {
     const id = RemoveStockState.staticIds.encounterDate;
     const date = this.stock.encounterDateTime;
-    if (moment(date).isAfter(moment(), 'day')) {
+    if (_.isNil(date)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else if (moment(date).isAfter(moment(), 'day')) {
       this.handleValidationResult(ValidationResult.failureForFutureDate(id));
     } else {
       this.handleValidationResult(ValidationResult.successful(id));

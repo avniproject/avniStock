@@ -97,7 +97,7 @@ export default function Stock({navigation, productUUID}) {
           />
           <DateInput
             label={t('expiryDate')}
-            date={_.isNil(state.expiryDate) ? new Date() : state.expiryDate}
+            date={state.expiryDate}
             onDateChange={date =>
               dispatch({
                 type: stockActions.ON_PRIMITIVE_OBS_CHANGE,

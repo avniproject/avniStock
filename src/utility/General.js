@@ -162,7 +162,7 @@ class General {
   }
 
   static toDisplayDate(date) {
-    return moment(date).format('DD-MMM-YYYY');
+    return _.isNil(date) ? '' : moment(date).format('DD-MMM-YYYY');
   }
 
   static toTwoChars(number) {

@@ -38,7 +38,7 @@ export default function DateInput({date, onDateChange, label, errorText}) {
       {React.useMemo(() => {
         return showPicker ? (
           <DateTimePicker
-            value={date}
+            value={date || new Date()}
             mode={'date'}
             display={'default'}
             is24Hour={false}

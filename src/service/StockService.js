@@ -22,7 +22,9 @@ class StockService extends BaseService {
 
   getBatchDetailsForProduct(productUUID) {
     return _.map(
-      this.getAllNonVoided().filtered('individual.uuid = $0', productUUID),
+      this.getAllNonVoided()
+        .filtered('individual.uuid = $0', productUUID)
+        .filter(enl => enl.isAvailable()),
       enl => ({
         uuid: enl.uuid,
         batchNumber: enl.batchNumber,

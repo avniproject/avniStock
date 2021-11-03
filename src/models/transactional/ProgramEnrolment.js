@@ -151,6 +151,13 @@ class ProgramEnrolment extends Realm.Object {
   getTotalRemainingExcept(removedStockUUID) {
     return this.quantity - this.getTotalRemovedItems(removedStockUUID);
   }
+
+  isAvailable() {
+    return (
+      this.getTotalRemainingExcept() > 0 &&
+      moment(this.expiryDate).isAfter(moment(), 'day')
+    );
+  }
 }
 
 ProgramEnrolment.schema = {
