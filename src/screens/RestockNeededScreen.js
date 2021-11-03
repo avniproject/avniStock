@@ -18,7 +18,7 @@ const RestockNeededScreen = ({navigation}) => {
 
   return (
     <Fragment>
-      <AppBar title={'Restock needed'} navigation={navigation} />
+      <AppBar title={'restockNeeded'} navigation={navigation} />
       <ProductList navigation={navigation} products={products} />
     </Fragment>
   );

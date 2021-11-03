@@ -14,12 +14,19 @@ const ChangeLanguageScreen = ({navigation}) => {
     getService(UserInfoService).updateLocale(locale);
   };
 
+  const onBackPress = () =>
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'HomeScreen'}],
+    });
+
   return (
     <Fragment>
       <AppBar
         title={t('changeLanguage')}
         navigation={navigation}
         showBackButton={true}
+        onBackPress={onBackPress}
       />
       <LanguageSelection
         currentLocale={locale}

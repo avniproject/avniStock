@@ -5,6 +5,7 @@ import {getService} from '../hooks/getService';
 import ProductService from '../service/ProductService';
 import ProductDetails from '../components/ProductDetails';
 import {useFocusEffect} from '@react-navigation/core';
+import {t} from '../service/i18n/messages';
 
 const ProductDetailsScreen = ({navigation, route}) => {
   const {productUUID} = route.params;
@@ -20,7 +21,7 @@ const ProductDetailsScreen = ({navigation, route}) => {
   return (
     <Fragment>
       <AppBar
-        title={'Product Details'}
+        title={t('productDetails')}
         navigation={navigation}
         showBackButton={true}
       />

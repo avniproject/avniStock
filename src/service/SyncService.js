@@ -101,13 +101,13 @@ class SyncService extends BaseService {
       'tx',
     );
     const {syncDetails, now, nowMinus10Seconds} = await Promise.resolve(
-      statusMessageCallBack('Uploading data to server'),
+      statusMessageCallBack('uploadingData'),
     )
       .then(() =>
         this.pushData(allTxEntityMetaData.slice(), onProgressPerEntity),
       )
       .then(() => onAfterMediaPush('After_Media', 0))
-      .then(() => statusMessageCallBack('Fetching changed resources'))
+      .then(() => statusMessageCallBack('fetchingChangedResources'))
       .then(() => post(`${serverURL}/syncDetails`, entitySyncStatus, true))
       .then(res => res.json());
 
@@ -133,10 +133,10 @@ class SyncService extends BaseService {
     );
     this.entitySyncStatusService.updateAsPerSyncDetails(filteredSyncDetails);
 
-    return Promise.resolve(statusMessageCallBack('Downloading forms'))
+    return Promise.resolve(statusMessageCallBack('downloadingForms'))
       .then(() => this.getRefData(filteredRefData, onProgressPerEntity, now))
 
-      .then(() => statusMessageCallBack('Downloading new data from server'))
+      .then(() => statusMessageCallBack('downloadingNewData'))
       .then(() =>
         this.getTxData(
           filteredTxData,

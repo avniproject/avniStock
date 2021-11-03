@@ -107,10 +107,7 @@ class StockState extends CommonState {
       )
     ) {
       this.handleValidationResult(
-        ValidationResult.failure(
-          id,
-          'Same batch number cannot be used twice for the same product.',
-        ),
+        ValidationResult.failure(id, 'sameBatchNumberError'),
       );
     } else {
       this.handleValidationResult(ValidationResult.successful(id));

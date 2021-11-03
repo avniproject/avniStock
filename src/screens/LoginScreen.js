@@ -12,6 +12,7 @@ import {loginActions} from '../reducers/LoginReducer';
 import ErrorText from '../components/ErrorText';
 import {getService} from '../hooks/getService';
 import SettingsService from '../service/SettingsService';
+import {t} from '../service/i18n/messages';
 
 export default function LoginScreen({navigation}) {
   const dispatch = useDispatch();
@@ -34,10 +35,10 @@ export default function LoginScreen({navigation}) {
 
   return (
     <Background>
-      <Header>Avni Stock</Header>
+      <Header>{t('avniStock')}</Header>
       <ErrorText errorText={state.loginError} />
       <TextInput
-        label="Username"
+        label={t('username')}
         returnKeyType="next"
         value={state.userId}
         onChangeText={userId =>
@@ -49,7 +50,7 @@ export default function LoginScreen({navigation}) {
       />
       {!isDev && (
         <PasswordInput
-          label={'Password'}
+          label={t('password')}
           value={state.password}
           onChange={password =>
             dispatch({type: loginActions.ON_PASSWORD_CHANGE, password})
@@ -62,12 +63,12 @@ export default function LoginScreen({navigation}) {
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPasswordScreen')}
           >
-            <Text style={styles.forgot}>Forgot your password?</Text>
+            <Text style={styles.forgot}>{t('forgotPassword')}</Text>
           </TouchableOpacity>
         </View>
       )}
       <Button mode="contained" onPress={onLoginPressed}>
-        Login
+        {t('login')}
       </Button>
     </Background>
   );

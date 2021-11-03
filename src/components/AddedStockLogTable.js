@@ -39,7 +39,7 @@ export default function AddedStockLogTable({productUUID, navigation}) {
 
   return (
     <View style={{minHeight: 150}}>
-      <BadgeText number={stocks.length} text={'Added Stock Logs'} />
+      <BadgeText number={stocks.length} text={'addedStockLogs'} />
       <DataTable>
         <StockLohHeader />
         {renderEachRow()}

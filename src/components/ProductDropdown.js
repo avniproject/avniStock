@@ -7,6 +7,7 @@ import _ from 'lodash';
 import {StyleSheet, Text, View} from 'react-native';
 import ErrorText from './ErrorText';
 import {useFocusEffect} from '@react-navigation/core';
+import {t} from '../service/i18n/messages';
 
 export default function ProductDropdown({
   productUUID = null,
@@ -34,7 +35,7 @@ export default function ProductDropdown({
 
   return (
     <View style={{marginVertical: 10}}>
-      <Text style={styles.label}>{'Product'}</Text>
+      <Text style={styles.label}>{t('product')}</Text>
       <DropDownPicker
         schema={productSchema}
         open={open}
@@ -44,13 +45,13 @@ export default function ProductDropdown({
         setValue={value => setProductUUID(value())}
         setItems={setItems}
         searchable={true}
-        placeholder={'Select Product'}
+        placeholder={t('selectProduct')}
         style={styles.container}
         listMode="SCROLLVIEW"
         listItemContainerStyle={{borderColor: Colors.border}}
         dropDownContainerStyle={{borderColor: Colors.border}}
         searchContainerStyle={{borderBottomColor: Colors.border}}
-        searchPlaceholder={'Search Product...'}
+        searchPlaceholder={t('searchProduct')}
         zIndex={200}
         disabled={disabled}
         showArrowIcon={!disabled}

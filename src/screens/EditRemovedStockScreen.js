@@ -1,12 +1,13 @@
 import React, {Fragment} from 'react';
 import AppBar from '../components/AppBar';
 import RemoveStock from '../components/RemoveStock';
+import {t} from '../service/i18n/messages';
 
 const EditRemovedStockScreen = ({navigation, route}) => {
   return (
     <Fragment>
       <AppBar
-        title={'Edit removed stock'}
+        title={t('editRemovedStock')}
         navigation={navigation}
         showBackButton={true}
       />

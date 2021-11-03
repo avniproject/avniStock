@@ -7,6 +7,7 @@ import moment from 'moment';
 import ValidationResult from '../models/framework/ValidationResult';
 import _ from 'lodash';
 import StockService from '../service/StockService';
+import {formatString} from '../service/i18n/messages';
 
 class RemoveStockState extends CommonState {
   constructor() {
@@ -100,7 +101,7 @@ class RemoveStockState extends CommonState {
       this.handleValidationResult(
         ValidationResult.failure(
           id,
-          `This cannot be greater than ${totalRemainingInBatch}, total remaining in this batch.`,
+          formatString('moreQuantityError', {totalRemainingInBatch}),
         ),
       );
     } else {

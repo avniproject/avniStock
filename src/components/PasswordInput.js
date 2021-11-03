@@ -1,6 +1,7 @@
 import {TextInput as PaperTextInput} from 'react-native-paper';
 import TextInput from './TextInput';
 import React, {useState} from 'react';
+import {t} from '../service/i18n/messages';
 
 export default function PasswordInput({
   label,
@@ -14,7 +15,7 @@ export default function PasswordInput({
 
   return (
     <TextInput
-      label={label}
+      label={t(label)}
       returnKeyType={returnKeyType}
       value={value}
       onChangeText={text => onChange(text)}

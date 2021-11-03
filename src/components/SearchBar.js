@@ -3,6 +3,7 @@ import {TouchableNativeFeedback, View, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextInput} from 'react-native-paper';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
 
 export default function SearchBar({value, onchange}) {
   const [showTextBox, setShowTextBox] = React.useState(false);
@@ -16,7 +17,7 @@ export default function SearchBar({value, onchange}) {
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       {showTextBox ? (
         <TextInput
-          placeholder={'Search'}
+          placeholder={t('search')}
           mode={'outlined'}
           value={value}
           onChangeText={onchange}

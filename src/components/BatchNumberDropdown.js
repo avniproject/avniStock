@@ -7,6 +7,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import StockService from '../service/StockService';
 import ErrorText from './ErrorText';
 import {useFocusEffect} from '@react-navigation/core';
+import {t} from '../service/i18n/messages';
 
 export default function BatchNumberDropdown({
   productUUID,
@@ -35,7 +36,7 @@ export default function BatchNumberDropdown({
 
   return (
     <View style={{marginVertical: 10}}>
-      <Text style={styles.label}>{'Batch Number'}</Text>
+      <Text style={styles.label}>{t('batchNumber')}</Text>
       <DropDownPicker
         schema={productSchema}
         open={open}
@@ -45,13 +46,13 @@ export default function BatchNumberDropdown({
         setValue={value => setProductBatchUUID(value())}
         setItems={setItems}
         searchable={true}
-        placeholder={'Select Batch'}
+        placeholder={t('selectBatch')}
         style={styles.container}
         listMode="SCROLLVIEW"
         listItemContainerStyle={{borderColor: Colors.border}}
         dropDownContainerStyle={{borderColor: Colors.border}}
         searchContainerStyle={{borderBottomColor: Colors.border}}
-        searchPlaceholder={'Search Batch...'}
+        searchPlaceholder={t('searchBatch')}
         zIndex={100}
         disabled={disabled}
         showArrowIcon={!disabled}

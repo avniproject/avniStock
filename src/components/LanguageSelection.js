@@ -34,7 +34,7 @@ export default ({currentLocale, onLocaleChange}) => {
         setOpen={setOpen}
         setValue={value => onLocaleChange(value())}
         setItems={setLanguages}
-        placeholder={'Select Language'}
+        placeholder={t('selectLanguage')}
         style={styles.container}
         listItemContainerStyle={{borderColor: Colors.border}}
         dropDownContainerStyle={{borderColor: Colors.border}}

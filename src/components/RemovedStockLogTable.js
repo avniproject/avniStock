@@ -8,6 +8,7 @@ import RemoveStockService from '../service/RemoveStockService';
 import StockLogRow from './StockLogRow';
 import {useFocusEffect} from '@react-navigation/core';
 import StockLohHeader from './StockLogHeader';
+import {t} from '../service/i18n/messages';
 
 export default function RemovedStockLogTable({productUUID, navigation}) {
   const [removedStockList, setRemovedStockList] = useState([]);
@@ -41,7 +42,10 @@ export default function RemovedStockLogTable({productUUID, navigation}) {
 
   return (
     <View style={{minHeight: 150}}>
-      <BadgeText number={removedStockList.length} text={'Removed Stock Logs'} />
+      <BadgeText
+        number={removedStockList.length}
+        text={t('removedStockLogs')}
+      />
       <DataTable>
         <StockLohHeader />
         {renderEachRow()}

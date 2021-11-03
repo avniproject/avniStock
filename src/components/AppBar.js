@@ -5,6 +5,8 @@ import Sync from './Sync';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchBar from './SearchBar';
 import SideDrawer from './SideDrawer';
+import {t} from '../service/i18n/messages';
+import _ from 'lodash';
 
 export default function AppBar({
   title = '',
@@ -14,8 +16,18 @@ export default function AppBar({
   productName,
   setProductName,
   displaySearch,
+  onBackPress,
 }) {
   const [displayDrawer, setDisplayDrawer] = React.useState(false);
+  const onBack = () => {
+    if (_.isFunction(onBackPress)) {
+      onBackPress();
+    } else {
+      navigation.canGoBack()
+        ? navigation.goBack()
+        : navigation.navigate('Product List');
+    }
+  };
   return (
     <React.Fragment>
       <View style={styles.container}>
@@ -24,11 +36,7 @@ export default function AppBar({
             <MaterialCommunityIcons
               name={'arrow-left'}
               style={styles.icon}
-              onPress={() =>
-                navigation.canGoBack()
-                  ? navigation.goBack()
-                  : navigation.navigate('Product List')
-              }
+              onPress={onBack}
             />
           ) : (
             <MaterialCommunityIcons
@@ -37,7 +45,7 @@ export default function AppBar({
               onPress={() => setDisplayDrawer(p => !p)}
             />
           )}
-          <Text style={styles.header}>{title}</Text>
+          <Text style={styles.header}>{t(title)}</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           {displaySearch && (

@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TextInput as Input} from 'react-native-paper';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
 
 export default function TextInput({errorText, description, ...props}) {
   return (
@@ -14,9 +15,9 @@ export default function TextInput({errorText, description, ...props}) {
         {...props}
       />
       {description && !errorText ? (
-        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.description}>{t(description)}</Text>
       ) : null}
-      {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
+      {errorText ? <Text style={styles.error}>{t(errorText)}</Text> : null}
     </View>
   );
 }

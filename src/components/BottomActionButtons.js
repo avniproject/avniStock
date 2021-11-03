@@ -1,6 +1,7 @@
 import React from 'react';
 import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
 
 export default function BottomActionButtons({onCancel, onSave}) {
   return (
@@ -9,14 +10,14 @@ export default function BottomActionButtons({onCancel, onSave}) {
         <View style={{flex: 0.5}}>
           <TouchableNativeFeedback onPress={onCancel}>
             <View style={styles.textContainer}>
-              <Text style={styles.cancelText}>{'Cancel'}</Text>
+              <Text style={styles.cancelText}>{t('cancel')}</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
         <View style={{flex: 0.5}}>
           <TouchableNativeFeedback onPress={onSave}>
             <View style={styles.textContainer}>
-              <Text style={styles.saveText}>{'Save'}</Text>
+              <Text style={styles.saveText}>{t('save')}</Text>
             </View>
           </TouchableNativeFeedback>
         </View>

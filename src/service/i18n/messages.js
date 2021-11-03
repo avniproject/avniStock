@@ -24,3 +24,5 @@ export const changeLanguage = languageKey => {
 };
 
 export const t = str => messages[str] || str;
+
+export const formatString = (str, obj) => messages.formatString(t(str), obj);

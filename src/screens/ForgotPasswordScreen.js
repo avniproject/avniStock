@@ -9,6 +9,7 @@ import Spinner from '../components/Spinner';
 import AuthService from '../service/AuthService';
 import ErrorText from '../components/ErrorText';
 import {getService} from '../hooks/getService';
+import {t} from '../service/i18n/messages';
 
 export default function ForgotPasswordScreen({navigation}) {
   const [username, setUsername] = useState();
@@ -27,20 +28,20 @@ export default function ForgotPasswordScreen({navigation}) {
     return (
       <Fragment>
         <TextInput
-          label="OTP"
+          label={t('otp')}
           returnKeyType="next"
           value={otp}
           onChangeText={text => setOtp(text)}
           keyboardType="numeric"
         />
         <PasswordInput
-          label={'New Password'}
+          label={t('newPassword')}
           value={password}
           returnKeyType={'next'}
           onChange={text => setPassword(text)}
         />
         <PasswordInput
-          label={'Confirm new Password'}
+          label={t('confirmNewPassword')}
           value={confirmPassword.password}
           returnKeyType={'done'}
           errorText={confirmPassword.error}
@@ -57,7 +58,7 @@ export default function ForgotPasswordScreen({navigation}) {
           onPress={onResetPassword}
           style={{marginTop: 16}}
         >
-          Change password
+          {t('changePassword')}
         </Button>
       </Fragment>
     );
@@ -67,7 +68,7 @@ export default function ForgotPasswordScreen({navigation}) {
     if (!_.isEqual(password, confirmPassword.password)) {
       setConfirmPassword(prevState => ({
         ...prevState,
-        error: 'Password does not match with the entered password',
+        error: 'passwordNotMatchError',
       }));
     } else {
       setShowSpinner(true);
@@ -77,7 +78,7 @@ export default function ForgotPasswordScreen({navigation}) {
           () => {
             setShowSpinner(false);
             // eslint-disable-next-line no-alert
-            alert('Password changed successfully.');
+            alert(t('passwordChangedMessage'));
             navigation.reset({
               index: 0,
               routes: [{name: 'LoginScreen'}],
@@ -104,7 +105,7 @@ export default function ForgotPasswordScreen({navigation}) {
             setShowSpinner(false);
             setCognitoUser(response.user);
             // eslint-disable-next-line no-alert
-            alert('OTP sent to registered mobile number');
+            alert(t('otpSentMessage'));
             setDisplayOtherOptions(true);
           }
         },
@@ -120,7 +121,7 @@ export default function ForgotPasswordScreen({navigation}) {
       <Header>Restore Password</Header>
       <ErrorText errorText={error} />
       <TextInput
-        label="Username"
+        label={t('username')}
         returnKeyType="next"
         value={username}
         onChangeText={text => setUsername(text)}
@@ -130,7 +131,7 @@ export default function ForgotPasswordScreen({navigation}) {
       />
       {!displayOtherOptions && (
         <Button mode="contained" onPress={sendOTP} style={{marginTop: 16}}>
-          Send OTP
+          {t('sendOtp')}
         </Button>
       )}
       {displayOtherOptions && OtpAndPassword()}

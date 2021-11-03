@@ -11,22 +11,18 @@ class ValidationResult {
   }
 
   static failureForEmpty(formIdentifier) {
-    return new ValidationResult(false, formIdentifier, "Field can't be empty.");
+    return new ValidationResult(false, formIdentifier, 'emptyErrorMessage');
   }
 
   static failureForUnique(formIdentifier) {
-    return new ValidationResult(
-      false,
-      formIdentifier,
-      'This field must be unique.',
-    );
+    return new ValidationResult(false, formIdentifier, 'uniqueErrorMessage');
   }
 
   static failureForFutureDate(formIdentifier) {
     return new ValidationResult(
       false,
       formIdentifier,
-      "Date can't be in future.",
+      'FutureDateErrorMessage',
     );
   }
 

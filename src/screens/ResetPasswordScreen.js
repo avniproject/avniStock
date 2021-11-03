@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import {getService} from '../hooks/getService';
 import AuthService from '../service/AuthService';
+import {t} from '../service/i18n/messages';
 
 const ResetPasswordScreen = ({navigation, route}) => {
   const {cognitoUser} = route.params;
@@ -35,10 +36,10 @@ const ResetPasswordScreen = ({navigation, route}) => {
 
   return (
     <Background>
-      <Header>Please Reset your Password</Header>
+      <Header>{t('resetYourPassword')}</Header>
       <ErrorText errorText={error} />
       <PasswordInput
-        label={'New Password'}
+        label={t('newPassword')}
         value={password}
         returnKeyType={'done'}
         onChange={text => setPassword(text)}
@@ -48,7 +49,7 @@ const ResetPasswordScreen = ({navigation, route}) => {
         onPress={onResetPassword}
         style={{marginTop: 16}}
       >
-        Reset password
+        {t('resetPassword')}
       </Button>
       <Spinner show={showSpinner} />
     </Background>

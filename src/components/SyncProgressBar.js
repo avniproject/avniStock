@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import KeepAwake from 'react-native-keep-awake';
 import Colors from '../styles/Colors';
 import {ProgressBar} from '@react-native-community/progress-bar-android';
+import {t} from '../service/i18n/messages';
 
 const {width} = Dimensions.get('window');
 
@@ -30,7 +31,7 @@ export default function SyncProgressBar({
             <View>
               {progress < 1 ? (
                 <View>
-                  <Text style={styles.syncTextContent}>{message}</Text>
+                  <Text style={styles.syncTextContent}>{t(message)}</Text>
                   <ProgressBar
                     styleAttr="Horizontal"
                     progress={progress}
@@ -44,12 +45,14 @@ export default function SyncProgressBar({
               ) : notifyUserOnCompletion ? (
                 <View>
                   <View style={styles.container}>
-                    <Text style={styles.percentageText}>{'Sync complete'}</Text>
+                    <Text style={styles.percentageText}>
+                      {t('syncComplete')}
+                    </Text>
                     <Icon name="check-circle" size={16} style={styles.icon} />
                   </View>
                   <View style={{paddingTop: 20}}>
                     <Button
-                      title={'Ok'}
+                      title={t('ok')}
                       color={Colors.green}
                       onPress={() => onPress()}
                     />

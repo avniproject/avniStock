@@ -13,6 +13,7 @@ import RemoveStockState from '../state/RemoveStockState';
 import Colors from '../styles/Colors';
 import ProductDropdown from './ProductDropdown';
 import {Surface} from 'react-native-paper';
+import {t} from '../service/i18n/messages';
 
 export default function RemoveStock({navigation, productRemovalUUID}) {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
       >
         <Surface style={styles.container}>
           <DateInput
-            label={'Date'}
+            label={'date'}
             date={stock.encounterDateTime}
             onDateChange={date =>
               dispatch({type: removeStockActions.ON_DATE_CHANGE, date})
@@ -79,7 +80,7 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
             disabled={state.editFlow}
           />
           <TextInput
-            label="Quantity"
+            label={t('quantity')}
             returnKeyType="next"
             value={_.toString(state.quantity)}
             onChangeText={quantity =>

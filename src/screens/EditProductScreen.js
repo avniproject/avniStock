@@ -8,6 +8,7 @@ import TextInput from '../components/TextInput';
 import _ from 'lodash';
 import BottomActionButtons from '../components/BottomActionButtons';
 import Individual from '../models/transactional/Individual';
+import {t} from '../service/i18n/messages';
 
 const EditProductScreen = ({navigation, route}) => {
   const {productUUID} = route.params;
@@ -30,14 +31,18 @@ const EditProductScreen = ({navigation, route}) => {
   return (
     <Fragment>
       <AppBar
-        title={'Edit Product'}
+        title={'editProduct'}
         navigation={navigation}
         showBackButton={true}
       />
       <SafeAreaView style={styles.container}>
-        <TextInput label="Name" disabled={true} value={state.product.name} />
         <TextInput
-          label="Restock Level"
+          label={t('name')}
+          disabled={true}
+          value={state.product.name}
+        />
+        <TextInput
+          label={t('restockLevel')}
           value={_.toString(state.restockLevel)}
           onChangeText={restockLevel =>
             dispatch({
@@ -54,7 +59,7 @@ const EditProductScreen = ({navigation, route}) => {
           )}
         />
         <TextInput
-          label="Current Stock"
+          label={t('currentStock')}
           disabled={true}
           value={_.toString(state.totalStock)}
         />

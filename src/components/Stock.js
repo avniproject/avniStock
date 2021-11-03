@@ -12,6 +12,7 @@ import ProgramEnrolment from '../models/transactional/ProgramEnrolment';
 import BottomActionButtons from './BottomActionButtons';
 import StockState from '../state/StockState';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
 
 export default function Stock({navigation, productUUID}) {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function Stock({navigation, productUUID}) {
       >
         <Surface style={styles.container}>
           <DateInput
-            label={'Date'}
+            label={t('date')}
             date={stock.enrolmentDateTime}
             onDateChange={date =>
               dispatch({type: stockActions.ON_DATE_CHANGE, date})
@@ -60,7 +61,7 @@ export default function Stock({navigation, productUUID}) {
             disabled={state.editFlow}
           />
           <TextInput
-            label="Quantity"
+            label={t('quantity')}
             returnKeyType="next"
             value={_.toString(state.quantity)}
             onChangeText={quantity =>
@@ -78,7 +79,7 @@ export default function Stock({navigation, productUUID}) {
             )}
           />
           <TextInput
-            label="Batch Number"
+            label={t('batchNumber')}
             returnKeyType="next"
             value={state.batchNumber}
             onChangeText={batchNumber =>
@@ -95,7 +96,7 @@ export default function Stock({navigation, productUUID}) {
             )}
           />
           <DateInput
-            label={'Expiry Date'}
+            label={t('expiryDate')}
             date={_.isNil(state.expiryDate) ? new Date() : state.expiryDate}
             onDateChange={date =>
               dispatch({

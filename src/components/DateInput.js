@@ -11,6 +11,7 @@ import Colors from '../styles/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import General from '../utility/General';
 import ErrorText from './ErrorText';
+import {t} from '../service/i18n/messages';
 
 export default function DateInput({date, onDateChange, label, errorText}) {
   const [showPicker, setShowPicker] = useState(false);
@@ -22,7 +23,7 @@ export default function DateInput({date, onDateChange, label, errorText}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label}>{t(label)}</Text>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={styles.pickedDateContainer}>
           <Text style={styles.pickedDate}>{General.toDisplayDate(date)}</Text>

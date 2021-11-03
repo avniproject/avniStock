@@ -9,6 +9,7 @@ import RestockNeededScreen from '../screens/RestockNeededScreen';
 import RemoveStockScreen from '../screens/RemoveStockScreen';
 import AddStockScreen from '../screens/AddStockScreen';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,7 @@ const getIconForRoute = (routeName, size, color) => {
   switch (routeName) {
     case 'Product List':
       return <FontAwesome name={'cubes'} size={size} color={color} />;
-    case 'Restock needed':
+    case 'Restock Needed':
       return (
         <MaterialCommunityIcons name={'chart-tree'} size={size} color={color} />
       );
@@ -28,6 +29,19 @@ const getIconForRoute = (routeName, size, color) => {
       return (
         <FontAwesome5 name={'ruler-horizontal'} size={size} color={color} />
       );
+  }
+};
+
+const getLabel = routeName => {
+  switch (routeName) {
+    case 'Product List':
+      return t('productList');
+    case 'Restock Needed':
+      return t('restockNeeded');
+    case 'Add Stock':
+      return t('addStock');
+    case 'Remove Stock':
+      return t('removeStock');
   }
 };
 
@@ -48,6 +62,7 @@ const BottomTabNavigator = ({route, navigation}) => {
             ? 'none'
             : 'flex',
         },
+        tabBarLabel: getLabel(route.name),
       })}
     >
       <Tab.Screen name="Add Stock" component={AddStockScreen} />
@@ -57,7 +72,7 @@ const BottomTabNavigator = ({route, navigation}) => {
         initialParams={route.params}
       />
       <Tab.Screen name="Remove Stock" component={RemoveStockScreen} />
-      <Tab.Screen name="Restock needed" component={RestockNeededScreen} />
+      <Tab.Screen name="Restock Needed" component={RestockNeededScreen} />
     </Tab.Navigator>
   );
 };

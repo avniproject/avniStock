@@ -4,6 +4,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import Colors from '../styles/Colors';
 import {Badge} from 'react-native-paper';
+import {t} from '../service/i18n/messages';
 
 export default function productList({products, navigation}) {
   const renderProduct = ({item}) => (
@@ -19,7 +20,7 @@ export default function productList({products, navigation}) {
   const renderHeader = () =>
     products.length === 0 ? null : (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={styles.headerText}>Total Products</Text>
+        <Text style={styles.headerText}>{t('totalProducts')}</Text>
         <View>
           <Badge style={styles.badge}>{products.length}</Badge>
         </View>

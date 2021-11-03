@@ -1,14 +1,17 @@
 import {DataTable} from 'react-native-paper';
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {t} from '../service/i18n/messages';
 
 export default function StockLohHeader() {
   return (
     <DataTable.Header>
-      <DataTable.Title style={styles.header}>Date</DataTable.Title>
-      <DataTable.Title style={styles.header}>Batch Number</DataTable.Title>
-      <DataTable.Title style={styles.header}>Quantity</DataTable.Title>
-      <DataTable.Title style={styles.header}>Edit Record</DataTable.Title>
+      <DataTable.Title style={styles.header}>{t('date')}</DataTable.Title>
+      <DataTable.Title style={styles.header}>
+        {t('batchNumber')}
+      </DataTable.Title>
+      <DataTable.Title style={styles.header}>{t('quantity')}</DataTable.Title>
+      <DataTable.Title style={styles.header}>{t('editRecord')}</DataTable.Title>
     </DataTable.Header>
   );
 }
