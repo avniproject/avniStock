@@ -40,6 +40,9 @@ as_prerelease: ; $(call _create_config,prerelease)
 as_prod: ; $(call _create_config,prod)
 as_prod_dev: ; $(call _create_config,prod_dev)
 
+sha:=$(shell git rev-parse --short=4 HEAD)
+dat := $(shell /bin/date "+%Y-%m-%d-%H-%M-%S")
+
 run-app: setup_hosts as_dev _run_app
 run-app-staging: as_staging _run_app
 run-app-prod: as_prod _run_app
@@ -52,3 +55,13 @@ deps:
 
 clean:
 	rm -rf node_modules
+
+renew_env: clean deps
+
+release-staging-apk: renew_env as_staging
+	make create-apk
+
+upload-staging-apk:
+	@aws s3 cp --acl public-read android/app/build/outputs/apk/release/app-release.apk s3://samanvay/openchs/staging-apks/avni-stock-staging-$(sha)-$(dat).apk
+	@echo "APK Available at https://s3.ap-south-1.amazonaws.com/samanvay/openchs/staging-apks/avni-stock-staging-$(sha)-$(dat).apk"
+
