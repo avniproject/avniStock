@@ -107,7 +107,7 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 15,
-    paddingBottom: 30,
+    paddingBottom: 60,
     paddingHorizontal: 20,
   },
 });
