@@ -70,5 +70,10 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>bugsnag</key>
+	<dict>
+		<key>apiKey</key>
+		<string>384bae8ae1899ebc2029be2fc8a79199</string>
+	</dict>
 </dict>
 </plist>

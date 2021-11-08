@@ -14,7 +14,9 @@ import EntitySyncStatusService from './src/service/EntitySyncStatusService';
 import EntityMetaData from './src/models/framework/EntityMetaData';
 import {LogBox} from 'react-native';
 import UserInfoService from './src/service/UserInfoService';
-import {changeLanguage, getCurrentLocale} from './src/service/i18n/messages';
+import {changeLanguage} from './src/service/i18n/messages';
+import bugsnag from './src/utility/bugsnag';
+import ErrorView from './src/components/ErrorView';
 
 // In models there is many cyclic uses of classes. Ignoring those logs for now
 LogBox.ignoreLogs(['Require cycle:']);
@@ -27,7 +29,7 @@ const theme = {
   },
 };
 const store = createStore(rootReducer);
-
+const ErrorBoundary = bugsnag.getPlugin('react').createErrorBoundary(React);
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -47,13 +49,15 @@ class App extends React.Component {
 
   render() {
     return this.state.loadApp ? (
-      <Provider store={store}>
-        <PaperProvider theme={theme}>
-          <NavigationContainer>
-            <Navigator userExists={this.state.userExists} />
-          </NavigationContainer>
-        </PaperProvider>
-      </Provider>
+      <ErrorBoundary FallbackComponent={ErrorView}>
+        <Provider store={store}>
+          <PaperProvider theme={theme}>
+            <NavigationContainer>
+              <Navigator userExists={this.state.userExists} />
+            </NavigationContainer>
+          </PaperProvider>
+        </Provider>
+      </ErrorBoundary>
     ) : (
       <Spinner show={!this.state.loadApp} />
     );

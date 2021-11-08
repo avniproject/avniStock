@@ -82,6 +82,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply plugin: "com.bugsnag.android.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -134,8 +135,13 @@ android {
         applicationId "com.avnistock"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode System.getenv("versionCode") ? System.getenv("versionCode").toInteger() : 1
+        versionName System.getenv("versionName") ? System.getenv("versionName") : "1"
+
+        manifestPlaceholders = [
+                bugsnagAPIKey: System.getenv("AVNI_STOCK_CLIENT_BUGSNAG_API_KEY") ?: "dummy",
+                bugsnagReleaseStage: System.getenv("RELEASE_ENV") ?: "dev"
+        ]
     }
     splits {
         abi {
@@ -225,3 +231,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+bugsnag {
+  uploadReactNativeMappings = true
+}

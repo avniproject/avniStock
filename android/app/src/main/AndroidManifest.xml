@@ -21,5 +21,8 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <meta-data android:name="com.bugsnag.android.API_KEY" android:value="${bugsnagAPIKey}" />
+      <meta-data android:name="com.bugsnag.android.ENABLED_RELEASE_STAGES" android:value="prod,staging,dev"/>
+      <meta-data android:name="com.bugsnag.android.RELEASE_STAGE" android:value="${bugsnagReleaseStage}"/>
     </application>
 </manifest>

@@ -59,7 +59,10 @@ clean:
 renew_env: clean deps
 
 release-staging-apk: renew_env as_staging
-	make create-apk
+	RELEASE_ENV=staging make create-apk
+
+release-staging-apk-without-clean: as_staging
+	RELEASE_ENV=staging make create-apk
 
 upload-staging-apk:
 	@aws s3 cp --acl public-read android/app/build/outputs/apk/release/app-release.apk s3://samanvay/openchs/staging-apks/avni-stock-staging-$(sha)-$(dat).apk
