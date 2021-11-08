@@ -33,8 +33,11 @@ export default function SideMenu({navigation, hideDrawer}) {
             navigation.navigate('Change Language');
           }}
         >
-          <View style={styles.listItem}>
-            <Text style={styles.listItemText}>{t('changeLanguage')}</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.listItem}>
+              <Icon style={styles.icon} name="language" size={25} />
+              <Text style={styles.listItemText}>{t('changeLanguage')}</Text>
+            </View>
             <Icon style={styles.icon} name="arrow-forward" size={25} />
           </View>
         </TouchableNativeFeedback>
@@ -91,7 +94,6 @@ const styles = StyleSheet.create({
     color: Colors.primary,
   },
   listItem: {
-    flex: 1,
     flexDirection: 'row',
     padding: 10,
   },
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
     color: Colors.text,
-    width: '90%',
+    width: '70%',
   },
   icon: {
     color: Colors.border,
