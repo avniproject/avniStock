@@ -14,7 +14,7 @@ export default function SearchBar({value, onchange}) {
   };
 
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 5}}>
       {showTextBox ? (
         <TextInput
           placeholder={t('search')}
@@ -38,8 +38,8 @@ export default function SearchBar({value, onchange}) {
 
 const styles = StyleSheet.create({
   textBox: {
-    width: 160,
-    height: 40,
+    width: 150,
+    height: 35,
     backgroundColor: Colors.surface,
   },
 });
