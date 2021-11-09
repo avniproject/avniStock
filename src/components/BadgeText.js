@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {Badge, Caption} from 'react-native-paper';
+import {Badge, Paragraph} from 'react-native-paper';
 import React from 'react';
 import Colors from '../styles/Colors';
 import {t} from '../service/i18n/messages';
@@ -7,7 +7,7 @@ import {t} from '../service/i18n/messages';
 export default function BadgeText({text, number}) {
   return (
     <View style={styles.container}>
-      <Caption>{t(text)}</Caption>
+      <Paragraph>{t(text)}</Paragraph>
       <View>
         <Badge style={styles.badge}>{number}</Badge>
       </View>
@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
     color: Colors.lightBlack,
     fontWeight: 'bold',
     marginLeft: 5,
+    fontSize: 12,
   },
 });

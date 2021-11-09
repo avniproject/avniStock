@@ -1,7 +1,11 @@
 import React from 'react';
-import {TouchableNativeFeedback, View, StyleSheet} from 'react-native';
+import {
+  TouchableNativeFeedback,
+  View,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TextInput} from 'react-native-paper';
 import Colors from '../styles/Colors';
 import {t} from '../service/i18n/messages';
 
@@ -16,13 +20,14 @@ export default function SearchBar({value, onchange}) {
   return (
     <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 5}}>
       {showTextBox ? (
-        <TextInput
-          placeholder={t('search')}
-          mode={'outlined'}
-          value={value}
-          onChangeText={onchange}
-          style={styles.textBox}
-        />
+        <View style={{width: 150}}>
+          <TextInput
+            placeholder={t('search')}
+            value={value}
+            onChangeText={onchange}
+            style={styles.textBox}
+          />
+        </View>
       ) : null}
       <TouchableNativeFeedback onPress={onIconPress}>
         <View>
@@ -38,8 +43,9 @@ export default function SearchBar({value, onchange}) {
 
 const styles = StyleSheet.create({
   textBox: {
-    width: 150,
-    height: 35,
+    height: 38,
+    margin: 12,
+    borderWidth: 0.5,
     backgroundColor: Colors.surface,
   },
 });

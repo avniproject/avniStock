@@ -26,10 +26,16 @@ export default function ExpiredReport({navigation}) {
 
   useFocusEffect(
     useCallback(() => {
-      setSelectedChip('tillToday');
-      onDateFilterPress(moment());
+      const date = _.defaultTo(
+        _.get(
+          _.find(chipToDateOptions, ({title}) => title === selectedChip),
+          'date',
+        ),
+        moment(),
+      );
+      onDateFilterPress(date);
       return () => {};
-    }, []),
+    }, [selectedChip]),
   );
 
   const onDateFilterPress = date => {
@@ -39,7 +45,6 @@ export default function ExpiredReport({navigation}) {
 
   const onChipPress = (title, date) => {
     setSelectedChip(title);
-    onDateFilterPress(date);
   };
 
   const renderBatch = ({item}) => {
@@ -55,7 +60,9 @@ export default function ExpiredReport({navigation}) {
         moreProductInfo={moreInfo}
         navigation={navigation}
         disableEdit={true}
-        customCardPress={_.noop}
+        customCardPress={() =>
+          navigation.navigate('Batch Details', {batchUUID: item.uuid})
+        }
       />
     );
   };
@@ -113,5 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     color: Colors.lightBlack,
     fontWeight: 'bold',
+    fontSize: 12,
   },
 });

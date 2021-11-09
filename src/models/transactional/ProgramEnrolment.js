@@ -165,6 +165,10 @@ class ProgramEnrolment extends Realm.Object {
       date.isSameOrAfter(this.expiryDate, 'day')
     );
   }
+
+  get totalRemaining() {
+    return this.quantity - _.sum(_.map(this.encounters, enc => enc.quantity));
+  }
 }
 
 ProgramEnrolment.schema = {

@@ -7,6 +7,7 @@ import EntityQueue from '../models/framework/EntityQueue';
 import ProgramEncounter from '../models/transactional/ProgramEncounter';
 import EncounterType from '../models/reference/EncounterType';
 import StockService from './StockService';
+import _ from 'lodash';
 
 @Service('removeStockService')
 class RemoveStockService extends BaseService {
@@ -18,9 +19,18 @@ class RemoveStockService extends BaseService {
     return ProgramEncounter.schema.name;
   }
 
-  getRemovedListForProductUUID(productUUID) {
+  getRemovedListForProductUUID(productUUID, batchUUID) {
     return this.getAllNonVoided()
-      .filtered('programEnrolment.individual.uuid = $0', productUUID)
+      .filtered(
+        _.isEmpty(productUUID)
+          ? 'uuid <> null'
+          : `programEnrolment.individual.uuid = '${productUUID}'`,
+      )
+      .filtered(
+        _.isEmpty(batchUUID)
+          ? 'uuid <> null'
+          : `programEnrolment.uuid = '${batchUUID}'`,
+      )
       .sorted('encounterDateTime', true);
   }
 

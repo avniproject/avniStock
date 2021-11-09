@@ -3,7 +3,6 @@ import Colors from '../styles/Colors';
 import {DataTable} from 'react-native-paper';
 import General from '../utility/General';
 import React from 'react';
-import {StyleSheet} from 'react-native';
 
 export default function StockLogRow({uuid, date, quantity, batch, onEdit}) {
   const Edit = () => (
@@ -12,20 +11,12 @@ export default function StockLogRow({uuid, date, quantity, batch, onEdit}) {
 
   return (
     <DataTable.Row key={uuid}>
-      <DataTable.Cell style={styles.row}>
-        {General.toDisplayDate(date)}
-      </DataTable.Cell>
-      <DataTable.Cell style={styles.row}>{batch}</DataTable.Cell>
-      <DataTable.Cell style={styles.row}>{quantity}</DataTable.Cell>
-      <DataTable.Cell style={styles.row} onPress={() => onEdit(uuid)}>
+      <DataTable.Cell>{General.toDisplayDate(date)}</DataTable.Cell>
+      <DataTable.Cell>{batch}</DataTable.Cell>
+      <DataTable.Cell>{quantity}</DataTable.Cell>
+      <DataTable.Cell onPress={() => onEdit(uuid)}>
         <Edit />
       </DataTable.Cell>
     </DataTable.Row>
   );
 }
-
-const styles = StyleSheet.create({
-  row: {
-    justifyContent: 'center',
-  },
-});

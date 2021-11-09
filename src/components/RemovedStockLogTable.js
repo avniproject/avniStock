@@ -10,15 +10,18 @@ import {useFocusEffect} from '@react-navigation/core';
 import StockLohHeader from './StockLogHeader';
 import {t} from '../service/i18n/messages';
 
-export default function RemovedStockLogTable({productUUID, navigation}) {
+export default function RemovedStockLogTable({
+  productUUID,
+  navigation,
+  batchUUID,
+}) {
   const [removedStockList, setRemovedStockList] = useState([]);
 
   useFocusEffect(
     useCallback(() => {
-      const removedStocks =
-        getService(RemoveStockService).getRemovedListForProductUUID(
-          productUUID,
-        );
+      const removedStocks = getService(
+        RemoveStockService,
+      ).getRemovedListForProductUUID(productUUID, batchUUID);
       setRemovedStockList(removedStocks);
       return () => {};
     }, [productUUID]),

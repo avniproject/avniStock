@@ -9,6 +9,7 @@ import EditProductScreen from '../screens/EditProductScreen';
 import EditStockScreen from '../screens/EditStockScreen';
 import EditRemovedStockScreen from '../screens/EditRemovedStockScreen';
 import ChangeLanguageScreen from '../screens/ChangeLanguageScreen';
+import BatchDetailsScreen from '../screens/BatchDetailsScreen';
 
 export default function Navigator({userExists}) {
   const Stack = createStackNavigator();
@@ -38,6 +39,7 @@ export default function Navigator({userExists}) {
         component={EditRemovedStockScreen}
       />
       <Stack.Screen name="Change Language" component={ChangeLanguageScreen} />
+      <Stack.Screen name="Batch Details" component={BatchDetailsScreen} />
     </Stack.Navigator>
   );
 }
