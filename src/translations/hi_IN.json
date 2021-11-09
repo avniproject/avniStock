@@ -55,5 +55,12 @@
   "downloadingForms": "फॉर्म्स दौनोएड हो रहे है",
   "downloadingNewData": "नया डाटा डाउनलोड हो रहा है",
   "syncComplete": "सिंक पूर्ण",
-  "ok": "ओके"
+  "ok": "ओके",
+  "reports": "रिपोर्ट",
+  "expiredBatches": "समाप्त बैच",
+  "tillToday": "आज तक",
+  "next15Days": "अगले 15 दिन",
+  "next30Days":  "अगले 30 दिन",
+  "next60Days": "अगले 60 दिन",
+  "next90Days":  "अगले 90 दिन"
 }

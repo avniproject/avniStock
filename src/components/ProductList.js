@@ -6,7 +6,12 @@ import Colors from '../styles/Colors';
 import {Badge} from 'react-native-paper';
 import {t} from '../service/i18n/messages';
 
-export default function productList({products, navigation}) {
+export default function productList({
+  products,
+  navigation,
+  displayRestockLevel,
+  disableEdit = false,
+}) {
   const renderProduct = ({item}) => (
     <ProductCard
       name={item.name}
@@ -14,6 +19,9 @@ export default function productList({products, navigation}) {
       quantity={item.totalStock}
       uuid={item.uuid}
       navigation={navigation}
+      restockLevel={item.restockLevel}
+      displayRestockLevel={displayRestockLevel}
+      disableEdit={disableEdit}
     />
   );
 

@@ -4,6 +4,7 @@ import {syncReducer} from './SyncReducer';
 import {editProductReducer} from './EditProductReducer';
 import {stockReducer} from './StockReducer';
 import {removeStockReducer} from './RemoveStockReducer';
+import {reportReducer} from './ReportReducer';
 import General from '../utility/General';
 
 const appReducer = combineReducers({
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   editProduct: editProductReducer,
   stock: stockReducer,
   removeStock: removeStockReducer,
+  reports: reportReducer,
 });
 
 const rootReducer = (state, action) => {

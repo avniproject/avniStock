@@ -9,6 +9,7 @@ import EntityQueue from '../models/framework/EntityQueue';
 import _ from 'lodash';
 import ProductService from './ProductService';
 import Concept from '../models/reference/Concept';
+import moment from 'moment';
 
 @Service('stockService')
 class StockService extends BaseService {
@@ -18,6 +19,12 @@ class StockService extends BaseService {
 
   getSchema() {
     return ProgramEnrolment.schema.name;
+  }
+
+  getExpiredBatchAsOf(date) {
+    return this.getAllNonVoided().filter(enl =>
+      enl.isExpiredOnOrBefore(moment(date)),
+    );
   }
 
   getBatchDetailsForProduct(productUUID) {

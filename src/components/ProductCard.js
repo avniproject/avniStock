@@ -8,10 +8,26 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../styles/Colors';
+import {t} from '../service/i18n/messages';
+import _ from 'lodash';
 
-export default function ProductCard({name, unit, quantity, uuid, navigation}) {
-  const onCardPress = () =>
-    navigation.navigate('Product Details', {productUUID: uuid});
+export default function ProductCard({
+  name,
+  unit,
+  quantity,
+  uuid,
+  navigation,
+  restockLevel,
+  displayRestockLevel,
+  moreProductInfo = [],
+  disableEdit = false,
+  customCardPress,
+}) {
+  const onCardPress = () => {
+    return _.isFunction(customCardPress)
+      ? customCardPress()
+      : navigation.navigate('Product Details', {productUUID: uuid});
+  };
 
   const onEditPress = () =>
     navigation.navigate('Edit Product', {productUUID: uuid});
@@ -29,17 +45,31 @@ export default function ProductCard({name, unit, quantity, uuid, navigation}) {
             </View>
             <View style={styles.textContainer}>
               <Text style={{color: Colors.text}}>{name}</Text>
-              <Text style={{lineHeight: 25}}>
-                {quantity} {unit}
-              </Text>
+              {!_.isNil(quantity) && (
+                <Text style={{lineHeight: 25}}>
+                  {quantity} {unit}
+                </Text>
+              )}
+              {displayRestockLevel && (
+                <Text style={{lineHeight: 25}}>
+                  {t('restockLevel')} : {restockLevel} {unit}
+                </Text>
+              )}
+              {_.map(moreProductInfo, info => (
+                <Text key={info} style={{lineHeight: 25}}>
+                  {info}
+                </Text>
+              ))}
             </View>
           </View>
         </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={onEditPress}>
-          <View style={{alignSelf: 'flex-end'}}>
-            <FontAwesome name={'edit'} style={styles.icon} />
-          </View>
-        </TouchableNativeFeedback>
+        {!disableEdit && (
+          <TouchableNativeFeedback onPress={onEditPress}>
+            <View style={{alignSelf: 'flex-end'}}>
+              <FontAwesome name={'edit'} style={styles.icon} />
+            </View>
+          </TouchableNativeFeedback>
+        )}
       </View>
     </View>
   );

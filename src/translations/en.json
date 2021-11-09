@@ -55,5 +55,12 @@
   "downloadingForms": "Downloading forms",
   "downloadingNewData": "Downloading new data from server",
   "syncComplete": "Sync complete",
-  "ok": "Ok"
+  "ok": "Ok",
+  "reports": "Reports",
+  "expiredBatches": "Expired Batches",
+  "tillToday": "Till today",
+  "next15Days": "Next 15 days",
+  "next30Days":  "Next 30 days",
+  "next60Days": "Next 60 days",
+  "next90Days":  "Next 90 days"
 }

@@ -5,7 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import RestockNeededScreen from '../screens/RestockNeededScreen';
+import ReportScreen from '../screens/ReportScreen';
 import RemoveStockScreen from '../screens/RemoveStockScreen';
 import AddStockScreen from '../screens/AddStockScreen';
 import Colors from '../styles/Colors';
@@ -17,9 +17,13 @@ const getIconForRoute = (routeName, size, color) => {
   switch (routeName) {
     case 'Product List':
       return <FontAwesome name={'cubes'} size={size} color={color} />;
-    case 'Restock Needed':
+    case 'Reports':
       return (
-        <MaterialCommunityIcons name={'chart-tree'} size={size} color={color} />
+        <MaterialCommunityIcons
+          name={'align-vertical-bottom'}
+          size={size}
+          color={color}
+        />
       );
     case 'Add Stock':
       return (
@@ -36,8 +40,8 @@ const getLabel = routeName => {
   switch (routeName) {
     case 'Product List':
       return t('productList');
-    case 'Restock Needed':
-      return t('restockNeeded');
+    case 'Reports':
+      return t('reports');
     case 'Add Stock':
       return t('addStock');
     case 'Remove Stock':
@@ -72,7 +76,7 @@ const BottomTabNavigator = ({route, navigation}) => {
         initialParams={route.params}
       />
       <Tab.Screen name="Remove Stock" component={RemoveStockScreen} />
-      <Tab.Screen name="Restock Needed" component={RestockNeededScreen} />
+      <Tab.Screen name="Reports" component={ReportScreen} />
     </Tab.Navigator>
   );
 };
