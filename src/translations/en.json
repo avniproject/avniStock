@@ -65,5 +65,7 @@
   "next90Days":  "Next 90 days",
   "batchDetails": "Batch Details",
   "totalRemaining": "Total Remaining",
-  "batch": "Batch"
+  "batch": "Batch",
+  "Restock Needed": "Restock Needed",
+  "Expired": "Expired"
 }

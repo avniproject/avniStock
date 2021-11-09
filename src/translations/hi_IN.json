@@ -65,5 +65,7 @@
   "next90Days":  "अगले 90 दिन",
   "batchDetails": "बैच विवरण",
   "totalRemaining": "कुल शेष",
-  "batch": "बैच"
+  "batch": "बैच",
+  "Restock Needed": "रीस्टॉक की जरूरत",
+  "Expired": "समय सीमा समाप्त"
 }

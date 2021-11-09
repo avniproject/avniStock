@@ -1,6 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Colors from '../styles/Colors';
 import React from 'react';
+import {t} from '../service/i18n/messages';
 
 export default function ReportTab({tab, isSelected, onPress}) {
   return (
@@ -20,7 +21,7 @@ export default function ReportTab({tab, isSelected, onPress}) {
             color: isSelected ? Colors.surface : Colors.text,
           }}
         >
-          {tab}
+          {t(tab)}
         </Text>
       </TouchableOpacity>
     </View>

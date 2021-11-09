@@ -43,9 +43,10 @@ export default function SearchBar({value, onchange}) {
 
 const styles = StyleSheet.create({
   textBox: {
-    height: 38,
+    height: 40,
     margin: 12,
     borderWidth: 0.5,
+    borderRadius: 5,
     backgroundColor: Colors.surface,
   },
 });

@@ -68,3 +68,8 @@ upload-staging-apk:
 	@aws s3 cp --acl public-read android/app/build/outputs/apk/release/app-release.apk s3://samanvay/openchs/staging-apks/avni-stock-staging-$(sha)-$(dat).apk
 	@echo "APK Available at https://s3.ap-south-1.amazonaws.com/samanvay/openchs/staging-apks/avni-stock-staging-$(sha)-$(dat).apk"
 
+release-prod-apk: renew_env as_prod
+	RELEASE_ENV=prod make create-apk
+
+release-prod-bundle: renew_env as_prod
+	RELEASE_ENV=prod make create-bundle

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   syncTextContent: {
     lineHeight: 30,
     color: '#FFF',
-    height: 50,
+    minHeight: 50,
   },
   percentageText: {
     color: '#FFF',
