@@ -13,6 +13,7 @@ import ErrorText from '../components/ErrorText';
 import {getService} from '../hooks/getService';
 import SettingsService from '../service/SettingsService';
 import {t} from '../service/i18n/messages';
+import Spinner from '../components/Spinner';
 
 export default function LoginScreen({navigation}) {
   const dispatch = useDispatch();
@@ -67,9 +68,12 @@ export default function LoginScreen({navigation}) {
           </TouchableOpacity>
         </View>
       )}
-      <Button mode="contained" onPress={onLoginPressed}>
-        {t('login')}
-      </Button>
+      {!state.loggingIn && (
+        <Button mode="contained" onPress={onLoginPressed}>
+          {t('login')}
+        </Button>
+      )}
+      <Spinner show={state.loggingIn} />
     </Background>
   );
 }
