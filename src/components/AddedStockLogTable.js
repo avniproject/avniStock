@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from 'react';
-import {DataTable} from 'react-native-paper';
 import {getService} from '../hooks/getService';
 import StockService from '../service/StockService';
 import _ from 'lodash';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import BadgeText from './BadgeText';
 import StockLogRow from './StockLogRow';
 import {useFocusEffect} from '@react-navigation/core';
-import StockLohHeader from './StockLogHeader';
+import Colors from '../styles/Colors';
+import StockLogHeader from './StockLogHeader';
 
 export default function AddedStockLogTable({productUUID, navigation}) {
   const [stocks, setStocks] = useState([]);
@@ -38,12 +38,22 @@ export default function AddedStockLogTable({productUUID, navigation}) {
   };
 
   return (
-    <View style={{minHeight: 150}}>
+    <View style={{minHeight: 50}}>
       <BadgeText number={stocks.length} text={'addedStockLogs'} />
-      <DataTable>
-        <StockLohHeader />
-        {renderEachRow()}
-      </DataTable>
+      {stocks.length > 0 && (
+        <View style={styles.container}>
+          <StockLogHeader />
+          {renderEachRow()}
+        </View>
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: Colors.surface,
+  },
+});

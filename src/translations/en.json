@@ -64,5 +64,6 @@
   "next60Days": "Next 60 days",
   "next90Days":  "Next 90 days",
   "batchDetails": "Batch Details",
-  "totalRemaining": "Total Remaining"
+  "totalRemaining": "Total Remaining",
+  "batch": "Batch"
 }

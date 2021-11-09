@@ -1,24 +1,32 @@
-import {DataTable} from 'react-native-paper';
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {t} from '../service/i18n/messages';
 import Colors from '../styles/Colors';
+import {Row, Table} from 'react-native-table-component';
 
-export default function StockLohHeader() {
-  const renderHeader = title => <Text style={styles.headerText}>{title}</Text>;
+export default function StockLogHeader() {
   return (
-    <DataTable.Header>
-      <DataTable.Title>{renderHeader(t('date'))}</DataTable.Title>
-      <DataTable.Title>{renderHeader(t('batchNumber'))}</DataTable.Title>
-      <DataTable.Title>{renderHeader(t('quantity'))}</DataTable.Title>
-      <DataTable.Title>{renderHeader(t('editRecord'))}</DataTable.Title>
-    </DataTable.Header>
+    <Table borderStyle={styles.table}>
+      <Row
+        data={[t('date'), t('batch'), t('quantity'), t('editRecord')]}
+        style={styles.header}
+        textStyle={styles.text}
+      />
+    </Table>
   );
 }
 
 const styles = StyleSheet.create({
-  headerText: {
-    fontWeight: 'bold',
-    color: Colors.lightBlack,
+  table: {
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  header: {
+    height: 40,
+    backgroundColor: Colors.background,
+  },
+  text: {
+    textAlign: 'center',
+    fontWeight: '100',
   },
 });

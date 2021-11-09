@@ -64,5 +64,6 @@
   "next60Days": "अगले 60 दिन",
   "next90Days":  "अगले 90 दिन",
   "batchDetails": "बैच विवरण",
-  "totalRemaining": "कुल शेष"
+  "totalRemaining": "कुल शेष",
+  "batch": "बैच"
 }
