@@ -64,6 +64,7 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
               RemoveStockState.staticIds.product,
             )}
             disabled={state.editFlow}
+            excludeZeroQuantity={true}
           />
           <BatchNumberDropdown
             productUUID={stock.programEnrolment.individual.uuid}

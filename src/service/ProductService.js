@@ -16,14 +16,15 @@ class ProductService extends BaseService {
     return Individual.schema.name;
   }
 
-  getSortedProductList(productName) {
+  getSortedProductList(productName, excludeZeroQuantity) {
     return this.getAllNonVoided()
       .filtered(
         _.isEmpty(productName)
           ? 'name <> null'
           : `name LIKE[c] "${productName}*"`,
       )
-      .sorted('name');
+      .sorted('name')
+      .filter(ind => (excludeZeroQuantity ? ind.totalStock > 0 : true));
   }
 
   updateProduct(editProductState) {

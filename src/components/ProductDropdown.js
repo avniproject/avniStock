@@ -14,13 +14,17 @@ export default function ProductDropdown({
   setProductUUID = _.noop,
   errorText,
   disabled,
+  excludeZeroQuantity,
 }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
 
   useFocusEffect(
     useCallback(() => {
-      const products = getService(ProductService).getSortedProductList();
+      const products = getService(ProductService).getSortedProductList(
+        '',
+        excludeZeroQuantity,
+      );
       setItems(products);
       return () => {
         setOpen(false);
