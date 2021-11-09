@@ -1,9 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ProductListScreen from '../screens/ProductListScreen';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ReportScreen from '../screens/ReportScreen';
 import RemoveStockScreen from '../screens/RemoveStockScreen';
@@ -16,7 +13,13 @@ const Tab = createBottomTabNavigator();
 const getIconForRoute = (routeName, size, color) => {
   switch (routeName) {
     case 'Product List':
-      return <FontAwesome name={'cubes'} size={size} color={color} />;
+      return (
+        <MaterialCommunityIcons
+          name={'format-list-bulleted'}
+          size={size}
+          color={color}
+        />
+      );
     case 'Reports':
       return (
         <MaterialCommunityIcons
@@ -27,11 +30,19 @@ const getIconForRoute = (routeName, size, color) => {
       );
     case 'Add Stock':
       return (
-        <Fontisto name={'shopping-basket-add'} size={size} color={color} />
+        <MaterialCommunityIcons
+          name={'plus-circle'}
+          size={size}
+          color={color}
+        />
       );
     case 'Remove Stock':
       return (
-        <FontAwesome5 name={'ruler-horizontal'} size={size} color={color} />
+        <MaterialCommunityIcons
+          name={'minus-circle'}
+          size={size}
+          color={color}
+        />
       );
   }
 };
