@@ -79,10 +79,11 @@ export default function ExpiredReport({navigation}) {
 
   return (
     <View style={{paddingBottom: 90}}>
-      <View style={{height: 40, marginTop: 5}}>
-        <ScrollView horizontal>
+      <View style={{height: 45, marginTop: 5}}>
+        <ScrollView horizontal contentContainerStyle={{paddingBottom: 12}}>
           {_.map(chipToDateOptions, ({title, date}) => (
             <Chip
+              style={{marginHorizontal: 2}}
               key={title}
               selected={title === selectedChip}
               selectedColor={Colors.primary}

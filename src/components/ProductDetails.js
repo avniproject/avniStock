@@ -15,13 +15,12 @@ export default function ProductDetails({product, navigation}) {
       contentContainerStyle={{paddingBottom: 50}}
     >
       <LabelValue label={t('name')} value={name} />
+      <LabelValue label={t('currentStock')} value={totalStock} />
       <LabelValue label={t('restockLevel')} value={restockLevel} />
       <Separator style={styles.separator} />
       <AddedStockLogTable productUUID={uuid} navigation={navigation} />
       <Separator style={styles.separator} />
       <RemovedStockLogTable productUUID={uuid} navigation={navigation} />
-      <Separator style={styles.separator} />
-      <LabelValue label={t('currentStock')} value={totalStock} />
     </ScrollView>
   );
 }

@@ -73,6 +73,7 @@ const BottomTabNavigator = ({route, navigation}) => {
         tabBarActiveBackgroundColor: Colors.primary,
         tabBarInactiveBackgroundColor: Colors.surface,
         tabBarStyle: {
+          height: 55,
           display: ['Add Stock', 'Remove Stock'].includes(route.name)
             ? 'none'
             : 'flex',
