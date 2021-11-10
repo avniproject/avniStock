@@ -6,6 +6,7 @@ import RemoveStockService from '../service/RemoveStockService';
 import StockService from '../service/StockService';
 import ProgramEncounter from '../models/transactional/ProgramEncounter';
 import ProductService from '../service/ProductService';
+import ProgramEnrolment from '../models/transactional/ProgramEnrolment';
 
 const prefix = 'Remove_Stock';
 
@@ -32,6 +33,7 @@ const removeStockReducer = (state = initialState, action) => {
 
   function onProductChange(state, action) {
     const newState = state.clone();
+    newState.stock.programEnrolment = ProgramEnrolment.createEmptyInstance();
     newState.stock.programEnrolment.individual = getService(
       ProductService,
     ).findByUUID(action.productUUID);
