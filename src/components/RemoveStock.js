@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/core';
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {removeStockActions} from '../reducers/RemoveStockReducer';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import DateInput from './DateInput';
@@ -16,6 +16,7 @@ import {Surface} from 'react-native-paper';
 import {t} from '../service/i18n/messages';
 
 export default function RemoveStock({navigation, productRemovalUUID}) {
+  const scrollRef = useRef();
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.removeStock);
   const stock = state.stock;
@@ -38,7 +39,8 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.surface}}>
       <ScrollView
-        contentContainerStyle={{paddingBottom: 50}}
+        ref={scrollRef}
+        contentContainerStyle={{paddingBottom: 185}}
         keyboardShouldPersistTaps={'handled'}
       >
         <Surface style={styles.container}>
@@ -82,6 +84,7 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
           />
           <TextInput
             label={t('quantity')}
+            onFocus={() => scrollRef.current?.scrollToEnd()}
             returnKeyType="next"
             value={_.toString(state.quantity)}
             onChangeText={quantity =>
