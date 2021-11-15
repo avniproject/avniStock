@@ -153,10 +153,7 @@ class ProgramEnrolment extends Realm.Object {
   }
 
   isAvailable() {
-    return (
-      this.getTotalRemainingExcept() > 0 &&
-      moment(this.expiryDate).isAfter(moment(), 'day')
-    );
+    return this.getTotalRemainingExcept() > 0;
   }
 
   isExpiredOnOrBefore(date = moment()) {
