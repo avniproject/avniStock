@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import Observation, {ObservationModel} from './Observation';
+import {ObservationModel} from './Observation';
 import PrimitiveValue from './PrimitiveValue';
+import SingleCodedValue from './SingleCodedValue';
 
 class ObservationsHolder {
   constructor(observations) {
@@ -33,7 +34,9 @@ class ObservationsHolder {
       this.observations.push(
         ObservationModel.create(
           concept,
-          new PrimitiveValue(value, concept.datatype),
+          concept.isCodedConcept()
+            ? new SingleCodedValue(value)
+            : new PrimitiveValue(value, concept.datatype),
         ),
       );
     }

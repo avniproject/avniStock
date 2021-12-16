@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/core';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback} from 'react';
 import {removeStockActions} from '../reducers/RemoveStockReducer';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import DateInput from './DateInput';
@@ -14,9 +14,9 @@ import Colors from '../styles/Colors';
 import ProductDropdown from './ProductDropdown';
 import {Surface} from 'react-native-paper';
 import {t} from '../service/i18n/messages';
+import SingleSelect from './SingleSelect';
 
 export default function RemoveStock({navigation, productRemovalUUID}) {
-  const scrollRef = useRef();
   const dispatch = useDispatch();
   const state = useSelector(storeState => storeState.removeStock);
   const stock = state.stock;
@@ -39,7 +39,6 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.surface}}>
       <ScrollView
-        ref={scrollRef}
         contentContainerStyle={{paddingBottom: 185}}
         keyboardShouldPersistTaps={'handled'}
       >
@@ -84,7 +83,6 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
           />
           <TextInput
             label={t('quantity')}
-            onFocus={() => scrollRef.current?.scrollToEnd()}
             returnKeyType="next"
             value={_.toString(state.quantity)}
             onChangeText={quantity =>
@@ -101,6 +99,40 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
               ProgramEncounter.conceptNames.quantity,
             )}
           />
+          <SingleSelect
+            onPress={value =>
+              dispatch({
+                type: removeStockActions.ON_PRIMITIVE_OBS_CHANGE,
+                payload: {
+                  value: value,
+                  conceptName: ProgramEncounter.conceptNames.reasonForRemoval,
+                },
+              })
+            }
+            conceptName={ProgramEncounter.conceptNames.reasonForRemoval}
+            value={state.reasonForRemoval}
+            errorText={state.getErrorMessage(
+              ProgramEncounter.conceptNames.reasonForRemoval,
+            )}
+          />
+          {state.reasonForRemoval === 'Transfer' && (
+            <SingleSelect
+              onPress={value =>
+                dispatch({
+                  type: removeStockActions.ON_PRIMITIVE_OBS_CHANGE,
+                  payload: {
+                    value: value,
+                    conceptName: ProgramEncounter.conceptNames.transferLocation,
+                  },
+                })
+              }
+              conceptName={ProgramEncounter.conceptNames.transferLocation}
+              value={state.transferLocation}
+              errorText={state.getErrorMessage(
+                ProgramEncounter.conceptNames.transferLocation,
+              )}
+            />
+          )}
         </Surface>
       </ScrollView>
 
@@ -111,7 +143,7 @@ export default function RemoveStock({navigation, productRemovalUUID}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 15,
-    paddingBottom: 60,
+    paddingBottom: 30,
     paddingHorizontal: 20,
   },
 });

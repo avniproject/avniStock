@@ -9,6 +9,8 @@ import moment from 'moment';
 class ProgramEncounter extends Realm.Object {
   static conceptNames = {
     quantity: 'Quantity',
+    reasonForRemoval: 'Reason for removal',
+    transferLocation: 'Transfer location',
   };
 
   static createEmptyInstance() {
@@ -74,6 +76,18 @@ class ProgramEncounter extends Realm.Object {
   get quantity() {
     return this.getObservationReadableValue(
       ProgramEncounter.conceptNames.quantity,
+    );
+  }
+
+  get reasonForRemoval() {
+    return this.getObservationReadableValue(
+      ProgramEncounter.conceptNames.reasonForRemoval,
+    );
+  }
+
+  get transferLocation() {
+    return this.getObservationReadableValue(
+      ProgramEncounter.conceptNames.transferLocation,
     );
   }
 }

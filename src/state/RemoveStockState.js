@@ -59,6 +59,18 @@ class RemoveStockState extends CommonState {
     );
   }
 
+  get reasonForRemoval() {
+    return this.observationHolder.getObservationReadableValue(
+      ProgramEncounter.conceptNames.reasonForRemoval,
+    );
+  }
+
+  get transferLocation() {
+    return this.observationHolder.getObservationReadableValue(
+      ProgramEncounter.conceptNames.transferLocation,
+    );
+  }
+
   validateDate() {
     const id = RemoveStockState.staticIds.encounterDate;
     const date = this.stock.encounterDateTime;
@@ -111,11 +123,34 @@ class RemoveStockState extends CommonState {
     }
   }
 
+  validateReasonForRemoval() {
+    const id = ProgramEncounter.conceptNames.reasonForRemoval;
+    if (_.isEmpty(this.reasonForRemoval)) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
+  validateTransferLocation() {
+    const id = ProgramEncounter.conceptNames.transferLocation;
+    if (
+      this.reasonForRemoval === 'Transfer' &&
+      _.isEmpty(this.transferLocation)
+    ) {
+      this.handleValidationResult(ValidationResult.failureForEmpty(id));
+    } else {
+      this.handleValidationResult(ValidationResult.successful(id));
+    }
+  }
+
   validate() {
     this.validateDate();
     this.validateBatchNumber();
     this.validateProduct();
     this.validateQuantity();
+    this.validateReasonForRemoval();
+    this.validateTransferLocation();
   }
 }
 

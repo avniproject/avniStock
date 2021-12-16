@@ -76,6 +76,17 @@ const removeStockReducer = (state = initialState, action) => {
       const conceptName = action.payload.conceptName;
       if (conceptName === ProgramEncounter.conceptNames.quantity) {
         newState.validateQuantity();
+      } else if (
+        conceptName === ProgramEncounter.conceptNames.reasonForRemoval
+      ) {
+        newState.observationHolder._removeExistingObs(
+          ProgramEncounter.conceptNames.transferLocation,
+        );
+        newState.validateReasonForRemoval();
+      } else if (
+        conceptName === ProgramEncounter.conceptNames.transferLocation
+      ) {
+        newState.validateTransferLocation();
       }
       return newState;
     }
