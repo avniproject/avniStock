@@ -51,7 +51,7 @@ export default function ProductDropdown({
         searchable={true}
         placeholder={t('selectProduct')}
         style={styles.container}
-        listMode="SCROLLVIEW"
+        listMode={items.length > 10 ? 'MODAL' : 'SCROLLVIEW'}
         listItemContainerStyle={{borderColor: Colors.border}}
         dropDownContainerStyle={{borderColor: Colors.border}}
         searchContainerStyle={{borderBottomColor: Colors.border}}
