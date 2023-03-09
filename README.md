@@ -13,5 +13,6 @@ Offline mobile application for the stock management.
 ### Release bundle
 
 - gradle.properties and avni-stock.keystore are stored in keeweb. And place these files as mentioned in the [docs](https://reactnative.dev/docs/signed-apk-android).
+- AVNI_STOCK_CLIENT_BUGSNAG_API_KEY env var needs to be set with value from bugsnag
 - Create bundle using command ` versionName=1.0 versionCode=10000 make release-prod-bundle`. Replace the vesionName and versionCode values.
 - Upload bundle to playstore.
